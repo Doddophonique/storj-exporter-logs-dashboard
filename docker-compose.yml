@@ -28,11 +28,6 @@ services:
     ports:
       - "${STORJ01_LISTEN_PORT}:28967"
       - "${STORJ01_DASHBOARD_PORT}:14002"
-    logging:
-      driver: loki
-      options:
-        loki-url: "http://172.18.250.251:3500/loki/api/v1/push"
-        loki-external-labels: job=storj
     volumes:
       - type: bind
         source: ${STORJ01_IDENTITY_BIND_MOUNT}

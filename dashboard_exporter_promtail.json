@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1612463653795,
+  "iteration": 1612471185892,
   "links": [
     {
       "icon": "external link",
@@ -177,13 +177,13 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "count(storj_nodeID_info{nodename=~\"$node.*\"}) OR vector(0)",
+          "expr": "count(count by (nodename) (storj_nodeID_info{nodename=~\"$node.*\"})) OR vector(0)",
           "interval": "",
           "legendFormat": "Nodes online",
           "refId": "A"
         },
         {
-          "expr": "count(storj_log_levels{nodename=~\"$node.*\",loglevel=\"INFO\"}) OR vector(0)",
+          "expr": "count(count by (nodename) (storj_log_levels{nodename=~\"$node.*\"})) OR vector(0)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -6497,5 +6497,5 @@
   "timezone": "",
   "title": "Storj-Exporter-Promtail",
   "uid": "a4ea4h4ej6kmv",
-  "version": 10
+  "version": 12
 }

@@ -209,7 +209,16 @@ scrape_configs:
           value: "download failed"
           action: inc
 
-      ## Log levels for errors
+      ## Log levels
+      levels:
+        type: counter
+        description: "Total number of loglevel messages in log"
+        prefix: storj_log_
+        max_idle_duration: 24h
+        source: loglevel
+        config:
+          match_all: true
+          action: inc
       errors:
         type: counter
         description: "Total number of error messages in log and their type"
@@ -229,28 +238,3 @@ scrape_configs:
           template: 'use of closed network connection'
       - labels:
           error:
-  
-  ## Log levels without other labels (used for getting node count)
-  - match:
-      selector: '{loglevel="INFO"}'
-      stages:
-      - labeldrop:
-        - satellite
-        - url
-        - type
-        - error
-        - filename
-        - compose_service
-        - compose_project
-        - source
-        # - other ## drop any other custom labels that may lead to inaccurate count
-      - metrics:
-          levels:
-            type: counter
-            description: "Total number of loglevel messages in log"
-            prefix: storj_log_
-            max_idle_duration: 24h
-            source: loglevel
-            config:
-              match_all: true
-              action: inc

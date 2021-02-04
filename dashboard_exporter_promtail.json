@@ -59,16 +59,25 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1611932211839,
+  "iteration": 1612460192878,
   "links": [
     {
       "icon": "external link",
       "tags": [],
       "targetBlank": true,
-      "title": "Storj-Log-Exporter Github",
+      "title": "Docker-Storj-Config Github",
       "tooltip": "",
       "type": "link",
-      "url": "https://github.com/kevinkk525/storj-log-exporter"
+      "url": "https://github.com/fmoledina/docker-storj-config"
+    },
+    {
+      "icon": "external link",
+      "tags": [],
+      "targetBlank": true,
+      "title": "Docker-Storj-Config Github",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://github.com/fmoledina/docker-storj-config"
     },
     {
       "icon": "question",
@@ -168,13 +177,13 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "count(storj_nodeID_info{instance=~\"$node.*\"}) OR vector(0)",
+          "expr": "count(storj_nodeID_info{nodename=~\"$node.*\"}) OR vector(0)",
           "interval": "",
           "legendFormat": "Nodes online",
           "refId": "A"
         },
         {
-          "expr": "count(storj_log_levels{instance=~\"$node.*\",loglevel=\"INFO\"}) OR vector(0)",
+          "expr": "count(storj_log_levels{nodename=~\"$node.*\",loglevel=\"INFO\"}) OR vector(0)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -262,7 +271,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(storj_sat_month_ingress{instance=~\"$node.*\"})",
+          "expr": "sum(storj_sat_month_ingress{nodename=~\"$node.*\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -350,7 +359,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(storj_sat_month_egress{instance=~\"$node.*\"})",
+          "expr": "sum(storj_sat_month_egress{nodename=~\"$node.*\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -432,7 +441,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(storj_total_diskspace{type=\"available\",instance=~\"$node.*\"})",
+          "expr": "sum(storj_total_diskspace{type=\"available\",nodename=~\"$node.*\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -491,7 +500,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum (storj_total_diskspace{type=\"trash\",instance=~\"$node.*\"})",
+          "expr": "sum (storj_total_diskspace{type=\"trash\",nodename=~\"$node.*\"})",
           "interval": "",
           "legendFormat": "Disk Trash",
           "refId": "A"
@@ -662,37 +671,37 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(storj_pieces_upload_successful{instance=~\"$node.*\"})/sum(storj_pieces_upload_started{instance=~\"$node.*\"}) or vector(0)",
+          "expr": "sum(storj_pieces_upload_successful{nodename=~\"$node.*\"})/sum(storj_pieces_upload_started{nodename=~\"$node.*\"}) or vector(0)",
           "interval": "",
           "legendFormat": "Upload",
           "refId": "B"
         },
         {
-          "expr": "sum(storj_pieces_upload_canceled{instance=~\"$node.*\"})/sum(storj_pieces_upload_started{instance=~\"$node.*\"}) or vector(0)",
+          "expr": "sum(storj_pieces_upload_canceled{nodename=~\"$node.*\"})/sum(storj_pieces_upload_started{nodename=~\"$node.*\"}) or vector(0)",
           "interval": "",
           "legendFormat": "Upload canceled",
           "refId": "F"
         },
         {
-          "expr": "sum(storj_pieces_upload_rejected{instance=~\"$node.*\"})/sum(storj_pieces_upload_started{instance=~\"$node.*\"}) or vector(0)",
+          "expr": "sum(storj_pieces_upload_rejected{nodename=~\"$node.*\"})/sum(storj_pieces_upload_started{nodename=~\"$node.*\"}) or vector(0)",
           "interval": "",
           "legendFormat": "Upload rejected",
           "refId": "D"
         },
         {
-          "expr": "sum(storj_pieces_download_successful{instance=~\"$node.*\"})/sum(storj_pieces_download_started{instance=~\"$node.*\"})",
+          "expr": "sum(storj_pieces_download_successful{nodename=~\"$node.*\"})/sum(storj_pieces_download_started{nodename=~\"$node.*\"})",
           "interval": "",
           "legendFormat": "Download",
           "refId": "A"
         },
         {
-          "expr": "sum(storj_pieces_download_canceled{instance=~\"$node.*\"})/sum(storj_pieces_download_started{instance=~\"$node.*\"})",
+          "expr": "sum(storj_pieces_download_canceled{nodename=~\"$node.*\"})/sum(storj_pieces_download_started{nodename=~\"$node.*\"})",
           "interval": "",
           "legendFormat": "Download canceled",
           "refId": "E"
         },
         {
-          "expr": "sum(storj_pieces_delete_successful{instance=~\"$node.*\"})/(sum(storj_pieces_delete_successful{instance=~\"$node.*\"})+sum(storj_pieces_delete_failed{instance=~\"$node.*\"} OR vector(0)))",
+          "expr": "sum(storj_pieces_delete_successful{nodename=~\"$node.*\"})/(sum(storj_pieces_delete_successful{nodename=~\"$node.*\"})+sum(storj_pieces_delete_failed{nodename=~\"$node.*\"} OR vector(0)))",
           "interval": "",
           "legendFormat": "Delete",
           "refId": "C"
@@ -793,7 +802,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[$__rate_interval]))",
+          "expr": "sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[$__rate_interval]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -803,7 +812,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[$__rate_interval]))",
+          "expr": "sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[$__rate_interval]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -813,7 +822,7 @@
           "refId": "D"
         },
         {
-          "expr": "sum(rate(storj_pieces_delete_successful{instance=~\"$node.*\"}[$__rate_interval]))",
+          "expr": "sum(rate(storj_pieces_delete_successful{nodename=~\"$node.*\"}[$__rate_interval]))",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "Net delete (avg)",
@@ -901,7 +910,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(storj_payout_currentMonth{type=~\"payout|held\",instance=~\"$node.*\"}) / 100",
+          "expr": "sum(storj_payout_currentMonth{type=~\"payout|held\",nodename=~\"$node.*\"}) / 100",
           "hide": false,
           "interval": "",
           "legendFormat": "Earnings Month",
@@ -956,7 +965,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(storj_payout_currentMonth{type=~\"held\",instance=~\"$node.*\"})/100",
+          "expr": "sum(storj_payout_currentMonth{type=~\"held\",nodename=~\"$node.*\"})/100",
           "interval": "",
           "legendFormat": "Held back",
           "refId": "A"
@@ -1010,7 +1019,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum (storj_total_diskspace{type=\"used\",instance=~\"$node.*\"})",
+          "expr": "sum (storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"})",
           "interval": "",
           "legendFormat": "Disk Used",
           "refId": "A"
@@ -1064,7 +1073,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum (storj_total_diskspace{type=\"available\",instance=~\"$node.*\"}) - sum (storj_total_diskspace{type=\"used\",instance=~\"$node.*\"})",
+          "expr": "sum (storj_total_diskspace{type=\"available\",nodename=~\"$node.*\"}) - sum (storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"})",
           "interval": "",
           "legendFormat": "Disk Free",
           "refId": "A"
@@ -1131,7 +1140,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "min(storj_sat_summary{type=\"onlineScore\", instance=~\"$node.*\"})",
+          "expr": "min(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"})",
           "interval": "",
           "legendFormat": "Min Uptime",
           "refId": "A"
@@ -1190,7 +1199,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "min(storj_sat_audit{type=\"score\", instance=~\"$node.*\"})",
+          "expr": "min(storj_sat_audit{type=\"score\", nodename=~\"$node.*\"})",
           "interval": "",
           "legendFormat": "Min Audit",
           "refId": "A"
@@ -1380,25 +1389,25 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(storj_log_levels{instance=~\"$node.*\",loglevel=\"INFO\"})",
+          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"INFO\"})",
           "interval": "",
           "legendFormat": "Info",
           "refId": "A"
         },
         {
-          "expr": "sum(storj_log_levels{instance=~\"$node.*\",loglevel=\"WARN\"}) OR vector(0)",
+          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"WARN\"}) OR vector(0)",
           "interval": "",
           "legendFormat": "Warn",
           "refId": "B"
         },
         {
-          "expr": "sum(storj_log_levels{instance=~\"$node.*\",loglevel=\"ERROR\"})-(sum(storj_log_errors{instance=~\"$node.*\",type=\"gracefulexit:service\\tfailed to get satellite address\"}) OR vector(0)) - (sum(storj_log_errors{instance=~\"$node.*\",type=\"piecestore\\tdownload failed\"}) OR vector(0)) - (sum(storj_log_errors{instance=~\"$node.*\",type=\"piecestore\\tupload failed\"}) OR vector(0)) -  (sum(storj_log_errors{instance=~\"$node.*\",type=\"servers\\tunexpected shutdown of a runner\"}) OR vector(0))",
+          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"ERROR\"})-(sum(storj_log_errors{nodename=~\"$node.*\",type=\"gracefulexit:service\\tfailed to get satellite address\"}) OR vector(0)) - (sum(storj_log_errors{nodename=~\"$node.*\",type=\"piecestore\\tdownload failed\"}) OR vector(0)) - (sum(storj_log_errors{nodename=~\"$node.*\",type=\"piecestore\\tupload failed\"}) OR vector(0)) -  (sum(storj_log_errors{nodename=~\"$node.*\",type=\"servers\\tunexpected shutdown of a runner\"}) OR vector(0)) OR vector(0)",
           "interval": "",
           "legendFormat": "Error (cor.)",
           "refId": "D"
         },
         {
-          "expr": "sum(storj_log_levels{instance=~\"$node.*\",loglevel=\"FATAL\"})  OR vector(0)",
+          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"})  OR vector(0)",
           "interval": "",
           "legendFormat": "Fatal",
           "refId": "C"
@@ -1461,7 +1470,7 @@
       "pluginVersion": "7.3.6",
       "targets": [
         {
-          "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[5m]))",
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1471,7 +1480,7 @@
           "refId": "D"
         },
         {
-          "expr": "sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[5m]))",
+          "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2212,116 +2221,116 @@
           },
           "targets": [
             {
-              "expr": "sum(storj_sat_month_ingress{instance=~\"$node.*\"}) by(instance)",
+              "expr": "sum(storj_sat_month_ingress{nodename=~\"$node.*\"}) by(nodename)",
               "format": "time_series",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | In",
+              "legendFormat": "{{nodename}} | In",
               "refId": "B"
             },
             {
-              "expr": "sum(storj_sat_month_egress{instance=~\"$node.*\"}) by(instance)",
+              "expr": "sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(nodename)",
               "format": "time_series",
               "hide": false,
               "instant": false,
               "interval": "",
               "intervalFactor": 1,
-              "legendFormat": "{{instance}} | Out",
+              "legendFormat": "{{nodename}} | Out",
               "refId": "A"
             },
             {
-              "expr": "sum(storj_sat_month_egress{type=\"repair\"}) by(instance)",
+              "expr": "sum(storj_sat_month_egress{type=\"repair\"}) by(nodename)",
               "interval": "",
-              "legendFormat": "{{instance}} | Repair",
+              "legendFormat": "{{nodename}} | Repair",
               "refId": "P"
             },
             {
-              "expr": "sum(storj_total_diskspace{type=\"available\", instance=~\"$node.*\"}) by(instance)",
+              "expr": "sum(storj_total_diskspace{type=\"available\", nodename=~\"$node.*\"}) by(nodename)",
               "format": "time_series",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | Disk available",
+              "legendFormat": "{{nodename}} | Disk available",
               "refId": "G"
             },
             {
-              "expr": "sum(storj_total_diskspace{type=\"used\", instance=~\"$node.*\"}) by(instance)",
+              "expr": "sum(storj_total_diskspace{type=\"used\", nodename=~\"$node.*\"}) by(nodename)",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | Disk used",
+              "legendFormat": "{{nodename}} | Disk used",
               "refId": "E"
             },
             {
-              "expr": "sum (storj_total_diskspace{type=\"available\",instance=~\"$node.*\"}) by(instance) - sum (storj_total_diskspace{type=\"used\",instance=~\"$node.*\"}) by(instance)",
+              "expr": "sum (storj_total_diskspace{type=\"available\",nodename=~\"$node.*\"}) by(nodename) - sum (storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}) by(nodename)",
               "interval": "",
-              "legendFormat": "{{instance}} | Free",
+              "legendFormat": "{{nodename}} | Free",
               "refId": "N"
             },
             {
-              "expr": "sum(storj_total_diskspace{type=\"trash\", instance=~\"$node.*\"}) by(instance)",
+              "expr": "sum(storj_total_diskspace{type=\"trash\", nodename=~\"$node.*\"}) by(nodename)",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | Trash",
+              "legendFormat": "{{nodename}} | Trash",
               "refId": "M"
             },
             {
-              "expr": "sum(storj_payout_currentMonth{type=~\"payout|held\",instance=~\"$node.*\"}) by (instance) / 100",
+              "expr": "sum(storj_payout_currentMonth{type=~\"payout|held\",nodename=~\"$node.*\"}) by (nodename) / 100",
               "interval": "",
-              "legendFormat": "{{instance}} | Earnings",
+              "legendFormat": "{{nodename}} | Earnings",
               "refId": "H"
             },
             {
-              "expr": "sum(storj_payout_currentMonth{type=~\"held\",instance=~\"$node.*\"}) by (instance) / 100",
+              "expr": "sum(storj_payout_currentMonth{type=~\"held\",nodename=~\"$node.*\"}) by (nodename) / 100",
               "interval": "",
-              "legendFormat": "{{instance}} | Held",
+              "legendFormat": "{{nodename}} | Held",
               "refId": "J"
             },
             {
-              "expr": "avg(storj_sat_summary{type=\"onlineScore\", instance=~\"$node.*\"}) by(instance) * 100",
+              "expr": "avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"}) by(nodename) * 100",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | Uptime",
+              "legendFormat": "{{nodename}} | Uptime",
               "refId": "C"
             },
             {
-              "expr": "avg(storj_sat_audit{type=\"score\", instance=~\"$node.*\"}) by(instance) * 100",
+              "expr": "avg(storj_sat_audit{type=\"score\", nodename=~\"$node.*\"}) by(nodename) * 100",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | Audit",
+              "legendFormat": "{{nodename}} | Audit",
               "refId": "D"
             },
             {
-              "expr": "avg (storj_sat_summary{type=\"disqualified\",instance=~\"$node.*\"}) by(instance)",
+              "expr": "avg (storj_sat_summary{type=\"disqualified\",nodename=~\"$node.*\"}) by(nodename)",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | Disqualified",
+              "legendFormat": "{{nodename}} | Disqualified",
               "refId": "K"
             },
             {
-              "expr": "avg(storj_sat_audit{type=\"unknownScore\"}) by(instance) * 100",
+              "expr": "avg(storj_sat_audit{type=\"unknownScore\"}) by(nodename) * 100",
               "interval": "",
-              "legendFormat": "{{instance}} | Suspension",
+              "legendFormat": "{{nodename}} | Suspension",
               "refId": "O"
             },
             {
-              "expr": "avg (storj_sat_summary{type=\"suspended\",instance=~\"$node.*\"}) by(instance)",
+              "expr": "avg (storj_sat_summary{type=\"suspended\",nodename=~\"$node.*\"}) by(nodename)",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | Suspended",
+              "legendFormat": "{{nodename}} | Suspended",
               "refId": "L"
             },
             {
-              "expr": "storj_node_info{version!=\"\",instance=~\"$node.*\"}",
+              "expr": "storj_node_info{version!=\"\",nodename=~\"$node.*\"}",
               "format": "time_series",
               "instant": true,
               "interval": "",
-              "legendFormat": "{{instance}} | Version | {{version}}",
+              "legendFormat": "{{nodename}} | Version | {{version}}",
               "refId": "I"
             },
             {
-              "expr": "avg (storj_upToDate_info{instance=~\"$node.*\"}) by (instance)",
+              "expr": "avg (storj_upToDate_info{nodename=~\"$node.*\"}) by (nodename)",
               "hide": false,
               "interval": "",
-              "legendFormat": "{{instance}} | UpToDate",
+              "legendFormat": "{{nodename}} | UpToDate",
               "refId": "F"
             }
           ],
@@ -2407,13 +2416,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(delta(storj_total_diskspace{type=\"used\",instance=~\"$node.*\"}[5m])) by(instance) * 8 / 300",
+              "expr": "sum(delta(storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}[5m])) by(nodename) * 8 / 300",
               "format": "time_series",
               "hide": false,
               "instant": false,
               "interval": "",
               "intervalFactor": 4,
-              "legendFormat": "DiskRate {{instance}}",
+              "legendFormat": "DiskRate {{nodename}}",
               "refId": "B"
             }
           ],
@@ -2525,18 +2534,18 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m])) by(instance) * 8",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
               "hide": false,
               "interval": "",
               "intervalFactor": 5,
-              "legendFormat": "RateIn {{instance}}",
+              "legendFormat": "RateIn {{nodename}}",
               "refId": "B"
             },
             {
-              "expr": "-sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m])) by(instance) * 8",
+              "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
               "interval": "",
               "intervalFactor": 5,
-              "legendFormat": "RateOut {{instance}}",
+              "legendFormat": "RateOut {{nodename}}",
               "refId": "A"
             }
           ],
@@ -2660,21 +2669,21 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "-sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[$__rate_interval])) ",
+              "expr": "-sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[$__rate_interval])) ",
               "format": "time_series",
               "hide": false,
               "instant": false,
               "interval": "",
               "intervalFactor": 10,
-              "legendFormat": "RateOut {{instance}}",
+              "legendFormat": "RateOut {{nodename}}",
               "refId": "A"
             },
             {
-              "expr": "sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[$__rate_interval]))",
+              "expr": "sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[$__rate_interval]))",
               "hide": false,
               "interval": "",
               "intervalFactor": 10,
-              "legendFormat": "RateIn {{instance}}",
+              "legendFormat": "RateIn {{nodename}}",
               "refId": "B"
             },
             {
@@ -2684,10 +2693,10 @@
               "refId": "E"
             },
             {
-              "expr": "sum(rate(storj_pieces_delete_successful{instance=~\"$node.*\"}[$__rate_interval]))",
+              "expr": "sum(rate(storj_pieces_delete_successful{nodename=~\"$node.*\"}[$__rate_interval]))",
               "interval": "",
               "intervalFactor": 10,
-              "legendFormat": "RateDelete {{instance}}",
+              "legendFormat": "RateDelete {{nodename}}",
               "refId": "C"
             }
           ],
@@ -2799,18 +2808,18 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\",type=\"usage\"}[5m])) by(instance) * 8",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(nodename) * 8",
               "hide": false,
               "interval": "",
               "intervalFactor": 5,
-              "legendFormat": "RateIn {{instance}}",
+              "legendFormat": "RateIn {{nodename}}",
               "refId": "B"
             },
             {
-              "expr": "-sum(rate(storj_sat_month_egress{instance=~\"$node.*\",type=\"usage\"}[5m])) by(instance) * 8",
+              "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(nodename) * 8",
               "interval": "",
               "intervalFactor": 5,
-              "legendFormat": "RateOut {{instance}}",
+              "legendFormat": "RateOut {{nodename}}",
               "refId": "A"
             }
           ],
@@ -2922,18 +2931,18 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(instance) * 8",
+              "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(nodename) * 8",
               "hide": false,
               "interval": "",
               "intervalFactor": 4,
-              "legendFormat": "RepairIn {{instance}}",
+              "legendFormat": "RepairIn {{nodename}}",
               "refId": "B"
             },
             {
-              "expr": "-sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(instance) * 8",
+              "expr": "-sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(nodename) * 8",
               "interval": "",
               "intervalFactor": 4,
-              "legendFormat": "RepairOut {{instance}}",
+              "legendFormat": "RepairOut {{nodename}}",
               "refId": "A"
             }
           ],
@@ -3057,13 +3066,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(delta(storj_total_diskspace{type=\"used\",instance=~\"$node.*\"}[5m])) by(instance) * 8 / 300",
+          "expr": "sum(delta(storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}[5m])) by(nodename) * 8 / 300",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "DiskRate {{instance}}",
+          "legendFormat": "DiskRate {{nodename}}",
           "refId": "B"
         }
       ],
@@ -3173,18 +3182,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m])) by(instance) * 8",
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
           "hide": false,
           "interval": "",
           "intervalFactor": 5,
-          "legendFormat": "RateIn {{instance}}",
+          "legendFormat": "RateIn {{nodename}}",
           "refId": "B"
         },
         {
-          "expr": "-sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m])) by(instance) * 8",
+          "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
           "interval": "",
           "intervalFactor": 5,
-          "legendFormat": "RateOut {{instance}}",
+          "legendFormat": "RateOut {{nodename}}",
           "refId": "A"
         }
       ],
@@ -3308,21 +3317,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "-sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[$__rate_interval])) by(instance)",
+          "expr": "-sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(nodename)",
           "format": "time_series",
           "hide": false,
           "instant": false,
           "interval": "",
           "intervalFactor": 10,
-          "legendFormat": "RateOut {{instance}}",
+          "legendFormat": "RateOut {{nodename}}",
           "refId": "A"
         },
         {
-          "expr": "sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[$__rate_interval])) by(instance)",
+          "expr": "sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(nodename)",
           "hide": false,
           "interval": "",
           "intervalFactor": 10,
-          "legendFormat": "RateIn {{instance}}",
+          "legendFormat": "RateIn {{nodename}}",
           "refId": "B"
         },
         {
@@ -3332,10 +3341,10 @@
           "refId": "E"
         },
         {
-          "expr": "sum(rate(storj_pieces_delete_successful{instance=~\"$node.*\"}[$__rate_interval])) by(instance)",
+          "expr": "sum(rate(storj_pieces_delete_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(nodename)",
           "interval": "",
           "intervalFactor": 10,
-          "legendFormat": "RateDelete {{instance}}",
+          "legendFormat": "RateDelete {{nodename}}",
           "refId": "C"
         }
       ],
@@ -3445,18 +3454,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\",type=\"usage\"}[5m])) by(instance) * 8",
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(nodename) * 8",
           "hide": false,
           "interval": "",
           "intervalFactor": 5,
-          "legendFormat": "RateIn {{instance}}",
+          "legendFormat": "RateIn {{nodename}}",
           "refId": "B"
         },
         {
-          "expr": "-sum(rate(storj_sat_month_egress{instance=~\"$node.*\",type=\"usage\"}[5m])) by(instance) * 8",
+          "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(nodename) * 8",
           "interval": "",
           "intervalFactor": 5,
-          "legendFormat": "RateOut {{instance}}",
+          "legendFormat": "RateOut {{nodename}}",
           "refId": "A"
         }
       ],
@@ -3566,18 +3575,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(instance) * 8",
+          "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(nodename) * 8",
           "hide": false,
           "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "RepairIn {{instance}}",
+          "legendFormat": "RepairIn {{nodename}}",
           "refId": "B"
         },
         {
-          "expr": "-sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(instance) * 8",
+          "expr": "-sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(nodename) * 8",
           "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "RepairOut {{instance}}",
+          "legendFormat": "RepairOut {{nodename}}",
           "refId": "A"
         }
       ],
@@ -3624,7 +3633,7 @@
       }
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
@@ -3633,782 +3642,780 @@
         "y": 24
       },
       "id": 700,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$datasource",
-          "decimals": null,
-          "description": "Pieces per second",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": [],
-              "unit": "pps"
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 10,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 25
-          },
-          "hiddenSeries": false,
-          "id": 688,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RateOut/",
-              "color": "#96D98D",
-              "stack": "A"
-            },
-            {
-              "alias": "/RateIn/",
-              "color": "#FFB357",
-              "stack": "B"
-            },
-            {
-              "alias": "0",
-              "color": "rgb(4, 4, 4)",
-              "hideTooltip": true,
-              "legend": false
-            },
-            {
-              "alias": "/RateDelete/",
-              "color": "#8F3BB8",
-              "stack": "C"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "-sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[$__rate_interval])) by(url)",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "RateOut {{url}}",
-              "refId": "A"
-            },
-            {
-              "expr": "sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[$__rate_interval])) by(url)",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "RateIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "0",
-              "interval": "",
-              "legendFormat": "0",
-              "refId": "E"
-            },
-            {
-              "expr": "sum(rate(storj_pieces_delete_successful{instance=~\"$node.*\"}[$__rate_interval])) by(url)",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "RateDelete {{url}}",
-              "refId": "C"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Net IO by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "pps",
-              "label": "Rate-out (-) / Rate-in (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net monthly sum",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": 0
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 25
-          },
-          "hiddenSeries": false,
-          "id": 693,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RateIn/",
-              "stack": "B"
-            },
-            {
-              "alias": "/RateOut/",
-              "stack": "C"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m])) by(url) * 8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "-sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m])) by(url) * 8",
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateOut {{url}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "NetIO by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": "Rate-out (-) / Rate-in (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "description": "Normal Ingress and Egress without Repair Traffic and Audits",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 5,
-            "w": 12,
-            "x": 0,
-            "y": 33
-          },
-          "hiddenSeries": false,
-          "id": 725,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RateIn/",
-              "stack": "B"
-            },
-            {
-              "alias": "/RateOut/",
-              "stack": "C"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "-sum(rate(storj_sat_month_egress{instance=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateOut {{url}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Net IO Usage by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": "Rate-out (-) / Rate-in (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "description": "Audit and Repair not separated because Audit is almost irrelevant in comparison.",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 5,
-            "w": 12,
-            "x": 12,
-            "y": 33
-          },
-          "hiddenSeries": false,
-          "id": 714,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RepairIn/",
-              "stack": "A"
-            },
-            {
-              "alias": "/RepairOut/",
-              "stack": "B"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(url) * 8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 4,
-              "legendFormat": "RepairIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "-sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(url) * 8",
-              "interval": "",
-              "intervalFactor": 4,
-              "legendFormat": "RepairOut {{url}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "NetIO Repair by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": "Rate Out (-) / Rate In (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "title": "Net IO by satellite",
       "type": "row"
     },
     {
-      "collapsed": true,
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "decimals": null,
+      "description": "Pieces per second",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": [],
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 10,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 25
+      },
+      "hiddenSeries": false,
+      "id": 688,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RateOut/",
+          "color": "#96D98D",
+          "stack": "A"
+        },
+        {
+          "alias": "/RateIn/",
+          "color": "#FFB357",
+          "stack": "B"
+        },
+        {
+          "alias": "0",
+          "color": "rgb(4, 4, 4)",
+          "hideTooltip": true,
+          "legend": false
+        },
+        {
+          "alias": "/RateDelete/",
+          "color": "#8F3BB8",
+          "stack": "C"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "-sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "RateOut {{url}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "RateIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "0",
+          "interval": "",
+          "legendFormat": "0",
+          "refId": "E"
+        },
+        {
+          "expr": "sum(rate(storj_pieces_delete_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "RateDelete {{url}}",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Net IO by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": "Rate-out (-) / Rate-in (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net monthly sum",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": 0
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 25
+      },
+      "hiddenSeries": false,
+      "id": 693,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RateIn/",
+          "stack": "B"
+        },
+        {
+          "alias": "/RateOut/",
+          "stack": "C"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(url) * 8",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(url) * 8",
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateOut {{url}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "NetIO by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "label": "Rate-out (-) / Rate-in (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "description": "Normal Ingress and Egress without Repair Traffic and Audits",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 33
+      },
+      "hiddenSeries": false,
+      "id": 725,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RateIn/",
+          "stack": "B"
+        },
+        {
+          "alias": "/RateOut/",
+          "stack": "C"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateOut {{url}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Net IO Usage by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "label": "Rate-out (-) / Rate-in (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "description": "Audit and Repair not separated because Audit is almost irrelevant in comparison.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 33
+      },
+      "hiddenSeries": false,
+      "id": 714,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RepairIn/",
+          "stack": "A"
+        },
+        {
+          "alias": "/RepairOut/",
+          "stack": "B"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(url) * 8",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "RepairIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "-sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(url) * 8",
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "RepairOut {{url}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "NetIO Repair by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "label": "Rate Out (-) / Rate In (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
       "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 38
       },
       "id": 644,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$datasource",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": [],
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 1,
-          "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 0,
-            "y": 26
-          },
-          "hiddenSeries": false,
-          "id": 642,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/Upload/",
-              "color": "#37872D"
-            },
-            {
-              "alias": "Upload average",
-              "color": "#C4162A"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(storj_pieces_upload_successful{instance=~\"$node.*\"}) by(instance)/sum(storj_pieces_upload_started{instance=~\"$node.*\"}) by(instance)",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Upload {{instance}}",
-              "refId": "A"
-            },
-            {
-              "expr": "sum(storj_pieces_upload_successful{instance=~\"$node.*\"})/sum(storj_pieces_upload_started{instance=~\"$node.*\"})",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Upload average",
-              "refId": "C"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Successrate Upload by node",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "decimals": 3,
-              "format": "percentunit",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": 2,
-              "format": "bps",
-              "label": "Storage sum",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$datasource",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 1,
-          "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 12,
-            "y": 26
-          },
-          "hiddenSeries": false,
-          "id": 298,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.6",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/Download/",
-              "color": "#5794F2"
-            },
-            {
-              "alias": "/Download average/",
-              "color": "#C4162A"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(storj_pieces_download_successful{instance=~\"$node.*\"}) by(instance)/sum(storj_pieces_download_started{instance=~\"$node.*\"}) by(instance)",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Download {{instance}}",
-              "refId": "B"
-            },
-            {
-              "expr": "sum(storj_pieces_download_successful{instance=~\"$node.*\"})/sum(storj_pieces_download_started{instance=~\"$node.*\"})",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Download average",
-              "refId": "C"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Successrate Download by node",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "decimals": 3,
-              "format": "percentunit",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": 2,
-              "format": "bps",
-              "label": "Storage sum",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "title": "Successrates",
       "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": [],
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 39
+      },
+      "hiddenSeries": false,
+      "id": 642,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/Upload/",
+          "color": "#37872D"
+        },
+        {
+          "alias": "Upload average",
+          "color": "#C4162A"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(storj_pieces_upload_successful{nodename=~\"$node.*\"}) by(nodename)/sum(storj_pieces_upload_started{nodename=~\"$node.*\"}) by(nodename)",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Upload {{nodename}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(storj_pieces_upload_successful{nodename=~\"$node.*\"})/sum(storj_pieces_upload_started{nodename=~\"$node.*\"})",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Upload average",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Successrate Upload by node",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 3,
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": 2,
+          "format": "bps",
+          "label": "Storage sum",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 39
+      },
+      "hiddenSeries": false,
+      "id": 298,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.6",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/Download/",
+          "color": "#5794F2"
+        },
+        {
+          "alias": "/Download average/",
+          "color": "#C4162A"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(storj_pieces_download_successful{nodename=~\"$node.*\"}) by(nodename)/sum(storj_pieces_download_started{nodename=~\"$node.*\"}) by(nodename)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Download {{nodename}}",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(storj_pieces_download_successful{nodename=~\"$node.*\"})/sum(storj_pieces_download_started{nodename=~\"$node.*\"})",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Download average",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Successrate Download by node",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 3,
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": 2,
+          "format": "bps",
+          "label": "Storage sum",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "collapsed": true,
@@ -4417,7 +4424,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 45
       },
       "id": 773,
       "panels": [
@@ -4472,7 +4479,7 @@
           "pluginVersion": "7.3.6",
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[5m]))",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[5m]))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4482,7 +4489,7 @@
               "refId": "D"
             },
             {
-              "expr": "sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[5m]))",
+              "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[5m]))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4549,7 +4556,7 @@
           "pluginVersion": "7.3.6",
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\",type=\"usage\"}[5m]))/sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\",type=\"usage\"}[5m]))",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\",type=\"usage\"}[5m]))/sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\",type=\"usage\"}[5m]))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4559,7 +4566,7 @@
               "refId": "D"
             },
             {
-              "expr": "sum(rate(storj_sat_month_egress{instance=~\"$node.*\",type=\"usage\"}[5m]))/sum(rate(storj_pieces_download_successful{instance=~\"$node.*\",type=\"usage\"}[5m]))",
+              "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\",type=\"usage\"}[5m]))/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\",type=\"usage\"}[5m]))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4626,7 +4633,7 @@
           "pluginVersion": "7.3.6",
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\",type=\"repair\"}[5m]))/sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\",type=\"repair\"}[5m]))",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\",type=\"repair\"}[5m]))/sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\",type=\"repair\"}[5m]))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4636,7 +4643,7 @@
               "refId": "D"
             },
             {
-              "expr": "sum(rate(storj_sat_month_egress{instance=~\"$node.*\",type=\"repair\"}[5m]))/sum(rate(storj_pieces_download_successful{instance=~\"$node.*\",type=\"repair\"}[5m]))",
+              "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\",type=\"repair\"}[5m]))/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\",type=\"repair\"}[5m]))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4719,7 +4726,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[5m])) ",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[5m])) ",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4729,7 +4736,7 @@
               "refId": "D"
             },
             {
-              "expr": "-(sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[5m])))",
+              "expr": "-(sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[5m])))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4847,7 +4854,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m])) by(type)/sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[5m])) by(type)",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(type)/sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[5m])) by(type)",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4857,7 +4864,7 @@
               "refId": "D"
             },
             {
-              "expr": "-(sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m])) by(type)/sum(rate(storj_pieces_download_successful{instance=~\"$node.*\",type!=\"audit\"}[5m])) by(type))",
+              "expr": "-(sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(type)/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\",type!=\"audit\"}[5m])) by(type))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4919,7 +4926,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 46
       },
       "id": 729,
       "panels": [
@@ -4979,7 +4986,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 28
+            "y": 47
           },
           "hide_first_column": false,
           "hide_headers": false,
@@ -5304,8 +5311,8 @@
           "scopedVars": {
             "node": {
               "selected": false,
-              "text": "node1",
-              "value": "node1"
+              "text": "storj01",
+              "value": "storj01"
             }
           },
           "sorting_props": {
@@ -5314,14 +5321,14 @@
           },
           "targets": [
             {
-              "expr": "sum(storj_sat_month_ingress{instance=~\"$node.*\"}) by(url)",
+              "expr": "sum(storj_sat_month_ingress{nodename=~\"$node.*\"}) by(url)",
               "format": "time_series",
               "hide": false,
               "legendFormat": "{{url}} | In",
               "refId": "B"
             },
             {
-              "expr": "sum(storj_sat_month_egress{instance=~\"$node.*\"}) by(url)",
+              "expr": "sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(url)",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -5331,36 +5338,36 @@
               "refId": "A"
             },
             {
-              "expr": "(sum(storj_sat_summary{type=\"storageSummary\",instance=~\"$node.*\"}) by(url) / (30 * 24) * 1.5  / 1000^4) + (sum(storj_sat_month_egress{instance=~\"$node.*\"}) by(url) / 1000^4 * 20)",
+              "expr": "(sum(storj_sat_summary{type=\"storageSummary\",nodename=~\"$node.*\"}) by(url) / (30 * 24) * 1.5  / 1000^4) + (sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(url) / 1000^4 * 20)",
               "interval": "",
               "legendFormat": "{{url}} | Payout",
               "refId": "H"
             },
             {
-              "expr": "sum(storj_sat_audit{type=\"successCount\",instance=~\"$node.*\"}) by (url)",
+              "expr": "sum(storj_sat_audit{type=\"successCount\",nodename=~\"$node.*\"}) by (url)",
               "legendFormat": "{{url}} | Vetting",
               "refId": "E"
             },
             {
-              "expr": "avg(storj_sat_summary{type=\"onlineScore\", instance=~\"$node.*\"}) by(url) * 100",
+              "expr": "avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"}) by(url) * 100",
               "hide": false,
               "interval": "",
               "legendFormat": "{{url}} | Uptime",
               "refId": "C"
             },
             {
-              "expr": "avg(storj_sat_audit{type=\"score\",instance=~\"$node.*\"}) by(url) * 100",
+              "expr": "avg(storj_sat_audit{type=\"score\",nodename=~\"$node.*\"}) by(url) * 100",
               "hide": false,
               "legendFormat": "{{url}} | Audit",
               "refId": "D"
             },
             {
-              "expr": "sum(storj_sat_summary{type=\"disqualified\",instance=~\"$node.*\"}) by (url)",
+              "expr": "sum(storj_sat_summary{type=\"disqualified\",nodename=~\"$node.*\"}) by (url)",
               "legendFormat": "{{url}} | Disqualified",
               "refId": "F"
             },
             {
-              "expr": "sum(storj_sat_summary{type=\"suspended\",instance=~\"$node.*\"}) by (url)",
+              "expr": "sum(storj_sat_summary{type=\"suspended\",nodename=~\"$node.*\"}) by (url)",
               "legendFormat": "{{url}} | Suspended",
               "refId": "G"
             }
@@ -5391,7 +5398,7 @@
             "h": 4,
             "w": 12,
             "x": 12,
-            "y": 28
+            "y": 47
           },
           "hiddenSeries": false,
           "id": 736,
@@ -5422,8 +5429,8 @@
           "scopedVars": {
             "node": {
               "selected": false,
-              "text": "node1",
-              "value": "node1"
+              "text": "storj01",
+              "value": "storj01"
             }
           },
           "seriesOverrides": [
@@ -5439,13 +5446,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(delta(storj_total_diskspace{type=\"used\",instance=~\"$node.*\"}[5m])) by(instance) * 8 / 300",
+              "expr": "sum(delta(storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}[5m])) by(nodename) * 8 / 300",
               "format": "time_series",
               "hide": false,
               "instant": false,
               "interval": "",
               "intervalFactor": 4,
-              "legendFormat": "DiskRate {{instance}}",
+              "legendFormat": "DiskRate {{nodename}}",
               "refId": "B"
             }
           ],
@@ -5512,7 +5519,7 @@
             "h": 4,
             "w": 12,
             "x": 12,
-            "y": 32
+            "y": 51
           },
           "hiddenSeries": false,
           "id": 737,
@@ -5543,8 +5550,8 @@
           "scopedVars": {
             "node": {
               "selected": false,
-              "text": "node1",
-              "value": "node1"
+              "text": "storj01",
+              "value": "storj01"
             }
           },
           "seriesOverrides": [
@@ -5564,18 +5571,18 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[5m])) by(instance) * 8",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
               "hide": false,
               "interval": "",
               "intervalFactor": 5,
-              "legendFormat": "RateIn {{instance}}",
+              "legendFormat": "RateIn {{nodename}}",
               "refId": "B"
             },
             {
-              "expr": "-sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[5m])) by(instance) * 8",
+              "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
               "interval": "",
               "intervalFactor": 5,
-              "legendFormat": "RateOut {{instance}}",
+              "legendFormat": "RateOut {{nodename}}",
               "refId": "A"
             }
           ],
@@ -5633,7 +5640,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 65
       },
       "id": 672,
       "panels": [
@@ -5909,7 +5916,7 @@
           "pluginVersion": "7.3.6",
           "targets": [
             {
-              "expr": "sum(storj_log_levels{instance=~\"$node.*\",loglevel=\"ERROR\"})-sum(storj_log_errors{instance=~\"$node.*\",loglevel=\"ERROR\"})",
+              "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"ERROR\"})-sum(storj_log_errors{nodename=~\"$node.*\",loglevel=\"ERROR\"})",
               "interval": "",
               "intervalFactor": 10,
               "legendFormat": "Errors per minute",
@@ -5979,7 +5986,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(storj_sat_month_egress{type=\"usage\",instance=~\"$node.*\"}) by(url) /1000000000000*20 + sum(storj_sat_month_egress{type=\"repair\",instance=~\"$node.*\"}) by(url)/1000000000000*10 + sum(storj_sat_summary{instance=~\"$node.*\",type=\"storageSummary\"}) by(url) /720/1000000000000*1.5",
+              "expr": "sum(storj_sat_month_egress{type=\"usage\",nodename=~\"$node.*\"}) by(url) /1000000000000*20 + sum(storj_sat_month_egress{type=\"repair\",nodename=~\"$node.*\"}) by(url)/1000000000000*10 + sum(storj_sat_summary{nodename=~\"$node.*\",type=\"storageSummary\"}) by(url) /720/1000000000000*1.5",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -6112,7 +6119,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(rate(storj_sat_month_ingress{instance=~\"$node.*\"}[$__rate_interval])) by(url) / sum(rate(storj_pieces_upload_successful{instance=~\"$node.*\"}[$__rate_interval])) by(url)",
+              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[$__rate_interval])) by(url) / sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -6122,7 +6129,7 @@
               "refId": "C"
             },
             {
-              "expr": "sum(rate(storj_sat_month_egress{instance=~\"$node.*\"}[$__rate_interval])) by(url) / sum(rate(storj_pieces_download_successful{instance=~\"$node.*\"}[$__rate_interval])) by(url)",
+              "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[$__rate_interval])) by(url) / sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
               "format": "time_series",
               "hide": false,
               "interval": "",
@@ -6236,15 +6243,15 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(storj_log_errors{instance=~\"$node.*\",type!=\"gracefulexit:service\\tfailed to get satellite address\",type!=\"piecestore\\tdownload failed\",type!=\"piecestore\\tupload failed\",type!=\"servers\\tunexpected shutdown of a runner\"}) by(instance,type) OR vector(0)",
+              "expr": "sum(storj_log_errors{nodename=~\"$node.*\",type!=\"gracefulexit:service\\tfailed to get satellite address\",type!=\"piecestore\\tdownload failed\",type!=\"piecestore\\tupload failed\",type!=\"servers\\tunexpected shutdown of a runner\"}) by(nodename,type) OR vector(0)",
               "interval": "",
-              "legendFormat": "Errors {{instance}}: {{type}}",
+              "legendFormat": "Errors {{nodename}}: {{type}}",
               "refId": "A"
             },
             {
-              "expr": "sum(storj_log_levels{instance=~\"$node.*\",loglevel=\"FATAL\"}) by(instance,type) OR vector(0)",
+              "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}) by(nodename,type) OR vector(0)",
               "interval": "",
-              "legendFormat": "Fatal {{instance}}: {{type}}",
+              "legendFormat": "Fatal {{nodename}}: {{type}}",
               "refId": "C"
             }
           ],
@@ -6396,7 +6403,7 @@
           },
           "targets": [
             {
-              "expr": "storj_sat_nodeJoinedAt_info{type=\"nodeJoinedAt\",nodeJoinedAt!=\"\",instance=~\"$node\"}",
+              "expr": "storj_sat_nodeJoinedAt_info{type=\"nodeJoinedAt\",nodeJoinedAt!=\"\",nodename=~\"$node\"}",
               "instant": true,
               "interval": "",
               "legendFormat": "{{url}} | JoinedAt | {{nodeJoinedAt}}",
@@ -6448,7 +6455,7 @@
         "allValue": null,
         "current": {},
         "datasource": "$datasource",
-        "definition": "label_values(storj_nodeID_info, instance)",
+        "definition": "label_values(storj_nodeID_info, nodename)",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -6456,7 +6463,7 @@
         "multi": true,
         "name": "node",
         "options": [],
-        "query": "label_values(storj_nodeID_info, instance)",
+        "query": "label_values(storj_nodeID_info, nodename)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -6488,7 +6495,7 @@
     ]
   },
   "timezone": "",
-  "title": "Storj-Exporter-Boom-Table-combined",
+  "title": "Storj-Exporter-Promtail",
   "uid": "a4ea4h4ej6kmv",
-  "version": 65
+  "version": 7
 }

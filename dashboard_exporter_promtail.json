@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1612460192878,
+  "iteration": 1612463653795,
   "links": [
     {
       "icon": "external link",
@@ -74,10 +74,10 @@
       "icon": "external link",
       "tags": [],
       "targetBlank": true,
-      "title": "Docker-Storj-Config Github",
+      "title": "Storj-Log-Exporter Github",
       "tooltip": "",
       "type": "link",
-      "url": "https://github.com/fmoledina/docker-storj-config"
+      "url": "https://github.com/kevinkk525/storj-log-exporter"
     },
     {
       "icon": "question",
@@ -6497,5 +6497,5 @@
   "timezone": "",
   "title": "Storj-Exporter-Promtail",
   "uid": "a4ea4h4ej6kmv",
-  "version": 7
+  "version": 10
 }

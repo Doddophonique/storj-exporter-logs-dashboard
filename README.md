@@ -146,4 +146,4 @@ The [Notes section from Storj-Log-Exporter](https://github.com/kevinkk525/storj-
 
 - Separate README for native binary Storj nodes, including links to guides for non-Docker Loki/Promtail installation
 - 2 week log retention limit by default with instructions on how to increase
-- Optional drop all logs except loglevel ERROR or FATAL
+- Optional drop all logs except loglevel ERROR or FATAL (i.e. drop INFO, WARN, DEBUG)

@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1612471185892,
+  "iteration": 1612487824132,
   "links": [
     {
       "icon": "external link",
@@ -1401,7 +1401,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"ERROR\"})-(sum(storj_log_errors{nodename=~\"$node.*\",type=\"gracefulexit:service\\tfailed to get satellite address\"}) OR vector(0)) - (sum(storj_log_errors{nodename=~\"$node.*\",type=\"piecestore\\tdownload failed\"}) OR vector(0)) - (sum(storj_log_errors{nodename=~\"$node.*\",type=\"piecestore\\tupload failed\"}) OR vector(0)) -  (sum(storj_log_errors{nodename=~\"$node.*\",type=\"servers\\tunexpected shutdown of a runner\"}) OR vector(0)) OR vector(0)",
+          "expr": "sum(storj_log_errors_corr{nodename=~\"$node.*\"}) OR vector(0)",
           "interval": "",
           "legendFormat": "Error (cor.)",
           "refId": "D"
@@ -6243,15 +6243,15 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(storj_log_errors{nodename=~\"$node.*\",type!=\"gracefulexit:service\\tfailed to get satellite address\",type!=\"piecestore\\tdownload failed\",type!=\"piecestore\\tupload failed\",type!=\"servers\\tunexpected shutdown of a runner\"}) by(nodename,type) OR vector(0)",
+              "expr": "sum(storj_log_errors_corr{nodename=~\"$node.*\"}) by(nodename,message) OR vector (0)",
               "interval": "",
-              "legendFormat": "Errors {{nodename}}: {{type}}",
+              "legendFormat": "Errors {{nodename}}: {{message}}",
               "refId": "A"
             },
             {
-              "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}) by(nodename,type) OR vector(0)",
+              "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}) by(nodename,message) OR vector(0)",
               "interval": "",
-              "legendFormat": "Fatal {{nodename}}: {{type}}",
+              "legendFormat": "Fatal {{nodename}}: {{message}}",
               "refId": "C"
             }
           ],
@@ -6497,5 +6497,5 @@
   "timezone": "",
   "title": "Storj-Exporter-Promtail",
   "uid": "a4ea4h4ej6kmv",
-  "version": 12
+  "version": 16
 }

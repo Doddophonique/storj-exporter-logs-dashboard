@@ -246,6 +246,8 @@ scrape_configs:
   - match:
       selector: '{loglevel="ERROR"} !~ "(\\.*)(gracefulexit:service\"\\,\"M\":\"failed to get satellite address)" !~ "(\\.*)(servers\"\\,\"M\":\"unexpected shutdown of a runner)"  | message != "download failed" and message != "upload failed"'
       stages:
+      - labels:
+          corrected: "true"
       - metrics:
           errors_corr:
             type: counter

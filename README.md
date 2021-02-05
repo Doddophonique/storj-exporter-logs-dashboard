@@ -141,3 +141,9 @@ TODO add instructions for file-based logs for completion.
 ## Notes
 
 The [Notes section from Storj-Log-Exporter](https://github.com/kevinkk525/storj-log-exporter#notes) are valid for the Promtail log metrics methodology presented in this repo.
+
+## TODO
+
+- Separate README for native binary Storj nodes, including links to guides for non-Docker Loki/Promtail installation
+- 2 week log retention limit by default with instructions on how to increase
+- Optional drop all logs except loglevel ERROR or FATAL

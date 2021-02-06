@@ -40,20 +40,26 @@ scrape_configs:
       grpc_listen_port: 3600
     use_incoming_timestamp: true
   pipeline_stages:
+
   - json:
+      ## Only grab expressions required for metrics or labels
       expressions:
         loglevel: L
-        timestamp: T
+        # timestamp: T   # automatically parsed by Loki
         message: M
         messagetype: '"N"'
-        satellite: '"Satellite ID" || "satellite ID"' # lowercase is used for failed to settle orders ERROR 
-        url: '"Satellite ID"'
-        action: Action
+        # satellite: '"Satellite ID" || "satellite ID"'   # only used for url label below
+        url: '"Satellite ID" || "satellite ID"' # lowercase is used for failed to settle orders ERROR 
+        # action: Action
         type: Action
         error: error
-        errorVerbose: errorVerbose
-        available_space: '"Available Space"'
-        size: Size
+        # available_space: '"Available Space"'  # may be of future use
+        # size: Size   # may be of future use
+
+  ## Prepend nodename (i.e. compose_service) to beginning of log line item
+  - replace:
+      expression: "(.*)"
+      replace: "{{ .compose_service }}: {{ .Value }}"
 
   ## Satellite ID replacement with Satellite URL
   - replace:
@@ -94,15 +100,33 @@ scrape_configs:
       expression: "(GET_AUDIT)"
       source: "type"
       replace: "audit"
+
+  ## Generate labels to use for Loki and Prometheus queries
   - labels:
       loglevel:
-      satellite:
       url:
       type:
-      error:
+      # error:
       message:
       messagetype:
-      nodename: compose_service  # for convenience. nodename could be specified as a loki-external-label in docker-compose
+      nodename: compose_service
+
+  ## Drop unnecessary labels to reduce log cardinality and/or redundancy with other labels
+  - labeldrop:
+      - filename
+      - compose_service
+      - compose_project
+
+  ## error label, whether simplified or not, is not required in the dashboard
+  ## workaround for all unique write tcp error messages..
+  # - match:
+  #     selector: '{loglevel="ERROR"} |= "download failed" != "GET_AUDIT"'
+  #     stages:
+  #     - template:
+  #         source: error
+  #         template: 'use of closed network connection'
+  #     - labels:
+  #         error:
 
   ## Generate Prometheus metrics that are exposed by promtail
   - metrics:
@@ -212,7 +236,7 @@ scrape_configs:
           value: "download failed"
           action: inc
 
-      ## Log levels
+      ## Log levels count
       levels:
         type: counter
         description: "Total number of loglevel messages in log"
@@ -224,7 +248,7 @@ scrape_configs:
           action: inc
       errors:
         type: counter
-        description: "Total number of error messages in log and their type"
+        description: "Total number of error messages in log and their message value"
         prefix: storj_log_
         max_idle_duration: 24h
         source: loglevel
@@ -232,22 +256,15 @@ scrape_configs:
           value: ERROR
           action: inc
 
-  ## workaround for all unique write tcp error messages..
-  - match:
-      selector: '{loglevel="ERROR"} |= "download failed" != "GET_AUDIT"'
-      stages:
-      - template:
-          source: error
-          template: 'use of closed network connection'
-      - labels:
-          error:
-  
-  ## corrected error value
+  ## Corrected error query
   - match:
       selector: '{loglevel="ERROR"} !~ "(\\.*)(gracefulexit:service\"\\,\"M\":\"failed to get satellite address)" !~ "(\\.*)(servers\"\\,\"M\":\"unexpected shutdown of a runner)"  | message != "download failed" and message != "upload failed"'
       stages:
+      - template:
+          source: errorCorrected
+          template: 'true'
       - labels:
-          corrected: "true"
+          errorCorrected:
       - metrics:
           errors_corr:
             type: counter

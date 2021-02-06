@@ -46,7 +46,7 @@ scrape_configs:
         timestamp: T
         message: M
         messagetype: '"N"'
-        satellite: '"Satellite ID"'
+        satellite: '"Satellite ID" || "satellite ID"' # lowercase is used for failed to settle orders ERROR 
         url: '"Satellite ID"'
         action: Action
         type: Action

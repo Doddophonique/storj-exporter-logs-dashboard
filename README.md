@@ -130,7 +130,13 @@ Add the dashboard from the file [dashboard_exporter_promtail.json](./dashboard_e
 
 ### Result
 
-![Dashboard](./dashboard.PNG)
+Storj-Exporter Promtail dashboard:
+
+![Storj-Exporter-Promtail](./dashboard-exporter-promtail.PNG)
+
+Storj-Logs dashboard:
+
+![Storj-Logs](./dashboard-logs.PNG)
 
 ## Native Binary Nodes
 

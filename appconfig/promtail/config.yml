@@ -258,32 +258,17 @@ scrape_configs:
 
   ## Corrected error query
   - match:
-      selector: '{loglevel="ERROR"} !~ "(\\.*)(gracefulexit:service\"\\,\"M\":\"failed to get satellite address)" !~ "(\\.*)(servers\"\\,\"M\":\"unexpected shutdown of a runner)"  | message != "download failed" and message != "upload failed"'
+      selector: '{loglevel="ERROR"} !~ "(\\.*)(gracefulexit:service\"\\,\"M\":\"failed to get satellite address)" !~ "(\\.*)(servers\"\\,\"M\":\"unexpected shutdown of a runner)"  | type != "usage" and type != "repair"'
       stages:
       - template:
           source: errorCorrected
-          template: 'true'
+          template: 'corrected'
       - labels:
           errorCorrected:
       - metrics:
           errors_corr:
             type: counter
             description: "Corrected total number of error messages"
-            prefix: storj_log_
-            max_idle_duration: 24h
-            source: loglevel
-            config:
-              match_all: true
-              action: inc
-
-  ## stefan-bentan warn value for testing selector
-  - match:
-      selector: '{loglevel="WARN"} |~ "(\\.*)(console:service\"\\,\"M\":\"unable to get Satellite URL)" !~ "(\\.*)(servers\"\\,\"M\":\"unexpected shutdown of a runner)"  | message != "download failed" and message != "upload failed"'
-      stages:
-      - metrics:
-          warn_stefan:
-            type: counter
-            description: "Total number of Stefan Bentan satellite warnings"
             prefix: storj_log_
             max_idle_duration: 24h
             source: loglevel

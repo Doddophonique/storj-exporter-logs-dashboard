@@ -49,10 +49,10 @@ scrape_configs:
         # available_space: '"Available Space"'  # may be of future use
         # size: Size   # may be of future use
 
-  ## Prepend nodename (i.e. compose_service) to beginning of log line item
+  ## Prepend nodename to beginning of log line item
   - replace:
       expression: "(.*)"
-      replace: "{{ .compose_service }}: {{ .Value }}"
+      replace: "{{ .nodename }}: {{ .Value }}"
 
   ## Satellite ID replacement with Satellite URL
   - replace:

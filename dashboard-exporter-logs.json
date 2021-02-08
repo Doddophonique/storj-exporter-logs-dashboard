@@ -79,8 +79,17 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1612677023469,
+  "iteration": 1612803018697,
   "links": [
+    {
+      "icon": "external link",
+      "tags": [],
+      "targetBlank": true,
+      "title": "Storj-Exporter-Logs Github",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://github.com/fmoledina/storj-exporter-logs-dashboard"
+    },
     {
       "icon": "external link",
       "tags": [],
@@ -1016,19 +1025,19 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "min(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"})",
+          "expr": "floor(min(storj_sat_audit{type=\"onlineScore\", nodename=~\"$node.*\"}*10000))/10000",
           "interval": "",
           "legendFormat": "Min Uptime",
           "refId": "B"
         },
         {
-          "expr": "min(storj_sat_audit{type=\"unknownScore\"})",
+          "expr": "floor(min(storj_sat_audit{type=~\"unknownScore|suspensionScore\",nodename=~\"$node.*\"}*10000))/10000",
           "interval": "",
           "legendFormat": "Min Suspension",
           "refId": "F"
         },
         {
-          "expr": "min(storj_sat_audit{type=\"score\", nodename=~\"$node.*\"})",
+          "expr": "floor(min(storj_sat_audit{type=~\"score|auditScore\", nodename=~\"$node.*\"}*10000))/10000",
           "interval": "",
           "legendFormat": "Min Audit",
           "refId": "D"
@@ -1289,7 +1298,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum(delta(storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}[5m])) * 8 / 300",
+          "expr": "sum(delta(storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}[5m])) *8 / 300",
           "interval": "",
           "legendFormat": "Disk Usage Rate",
           "refId": "D"
@@ -1428,7 +1437,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "ERROR (corr) and FATAL Logs",
+      "title": "ERROR (cor.) and FATAL Logs",
       "type": "logs"
     },
     {
@@ -1446,7 +1455,7 @@
       "type": "row"
     },
     {
-      "activePatternIndex": -3,
+      "activePatternIndex": 14,
       "datasource": "${DS_PROMETHEUS}",
       "debug_mode": false,
       "defaultPattern": {
@@ -2064,7 +2073,7 @@
           "bgColors_overrides": "0->green|2->red|1->yellow",
           "clickable_cells_link": "",
           "col_name": "Susp.",
-          "decimals": "0",
+          "decimals": "2",
           "defaultBGColor": "",
           "defaultTextColor": "",
           "delimiter": "|",
@@ -2210,14 +2219,14 @@
           "refId": "J"
         },
         {
-          "expr": "avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"}) by(nodename) * 100",
+          "expr": "floor(avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"} or storj_sat_audit{type=\"onlineScore\", nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
           "hide": false,
           "interval": "",
           "legendFormat": "{{nodename}} | Uptime",
           "refId": "C"
         },
         {
-          "expr": "avg(storj_sat_audit{type=\"score\", nodename=~\"$node.*\"}) by(nodename) * 100",
+          "expr": "floor(avg(storj_sat_audit{type=~\"score|auditScore\", nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
           "hide": false,
           "interval": "",
           "legendFormat": "{{nodename}} | Audit",
@@ -2231,7 +2240,7 @@
           "refId": "K"
         },
         {
-          "expr": "avg(storj_sat_audit{type=\"unknownScore\",nodename=~\"$node.*\"}) by(nodename) * 100",
+          "expr": "floor(avg(storj_sat_audit{type=~\"unknownScore|suspensionScore\",nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
           "interval": "",
           "legendFormat": "{{nodename}} | Suspension",
           "refId": "O"
@@ -4157,7 +4166,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
@@ -4166,262 +4175,261 @@
         "y": 44
       },
       "id": 644,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": [],
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 1,
-          "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 0,
-            "y": 32
-          },
-          "hiddenSeries": false,
-          "id": 642,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "connected",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "$$hashKey": "object:635",
-              "alias": "/Upload/",
-              "color": "#37872D"
-            },
-            {
-              "$$hashKey": "object:636",
-              "alias": "Upload average",
-              "color": "#C4162A"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(storj_pieces_upload_successful{nodename=~\"$node.*\"}) by(nodename)/sum(storj_pieces_upload_started{nodename=~\"$node.*\"}) by(nodename)",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Upload {{nodename}}",
-              "refId": "A"
-            },
-            {
-              "expr": "sum(storj_pieces_upload_successful{nodename=~\"$node.*\"})/sum(storj_pieces_upload_started{nodename=~\"$node.*\"})",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Upload average",
-              "refId": "C"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Successrate Upload by node",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:649",
-              "decimals": 3,
-              "format": "percentunit",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:650",
-              "decimals": 2,
-              "format": "bps",
-              "label": "Storage sum",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 1,
-          "gridPos": {
-            "h": 6,
-            "w": 12,
-            "x": 12,
-            "y": 32
-          },
-          "hiddenSeries": false,
-          "id": 298,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "connected",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "$$hashKey": "object:547",
-              "alias": "/Download/",
-              "color": "#5794F2"
-            },
-            {
-              "$$hashKey": "object:548",
-              "alias": "/Download average/",
-              "color": "#C4162A"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(storj_pieces_download_successful{nodename=~\"$node.*\"}) by(nodename)/sum(storj_pieces_download_started{nodename=~\"$node.*\"}) by(nodename)",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Download {{nodename}}",
-              "refId": "B"
-            },
-            {
-              "expr": "sum(storj_pieces_download_successful{nodename=~\"$node.*\"})/sum(storj_pieces_download_started{nodename=~\"$node.*\"})",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "Download average",
-              "refId": "C"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Successrate Download by node",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:561",
-              "decimals": 3,
-              "format": "percentunit",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:562",
-              "decimals": 2,
-              "format": "bps",
-              "label": "Storage sum",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "title": "Successrates",
       "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": [],
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 45
+      },
+      "hiddenSeries": false,
+      "id": 642,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:635",
+          "alias": "/Upload/",
+          "color": "#37872D"
+        },
+        {
+          "$$hashKey": "object:636",
+          "alias": "Upload average",
+          "color": "#C4162A"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(storj_pieces_upload_successful{nodename=~\"$node.*\"}) by(nodename)/sum(storj_pieces_upload_started{nodename=~\"$node.*\"}) by(nodename)",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Upload {{nodename}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(storj_pieces_upload_successful{nodename=~\"$node.*\"})/sum(storj_pieces_upload_started{nodename=~\"$node.*\"})",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Upload average",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Successrate Upload by node",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:649",
+          "decimals": 3,
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:650",
+          "decimals": 2,
+          "format": "bps",
+          "label": "Storage sum",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 1,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 45
+      },
+      "hiddenSeries": false,
+      "id": 298,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:547",
+          "alias": "/Download/",
+          "color": "#5794F2"
+        },
+        {
+          "$$hashKey": "object:548",
+          "alias": "/Download average/",
+          "color": "#C4162A"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(storj_pieces_download_successful{nodename=~\"$node.*\"}) by(nodename)/sum(storj_pieces_download_started{nodename=~\"$node.*\"}) by(nodename)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Download {{nodename}}",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(storj_pieces_download_successful{nodename=~\"$node.*\"})/sum(storj_pieces_download_started{nodename=~\"$node.*\"})",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "Download average",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Successrate Download by node",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:561",
+          "decimals": 3,
+          "format": "percentunit",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:562",
+          "decimals": 2,
+          "format": "bps",
+          "label": "Storage sum",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "collapsed": true,
@@ -4430,7 +4438,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 51
       },
       "id": 773,
       "panels": [
@@ -4910,725 +4918,703 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": "${DS_PROMETHEUS}",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 52
       },
       "id": 729,
-      "panels": [
-        {
-          "activePatternIndex": 1,
-          "datasource": "${DS_PROMETHEUS}",
-          "debug_mode": false,
-          "defaultPattern": {
-            "bgColors": "green|orange|red",
-            "bgColors_overrides": "0->green|2->red|1->yellow",
-            "clickable_cells_link": "",
-            "col_name": "",
-            "decimals": 2,
-            "defaultBGColor": "",
-            "defaultTextColor": "",
-            "delimiter": ":",
-            "displayTemplate": "_value_",
-            "enable_bgColor": true,
-            "enable_bgColor_overrides": false,
-            "enable_clickable_cells": false,
-            "enable_textColor": false,
-            "enable_textColor_overrides": false,
-            "enable_time_based_thresholds": false,
-            "enable_transform": false,
-            "enable_transform_overrides": false,
-            "filter": {
-              "value_above": "",
-              "value_below": ""
-            },
-            "format": "short",
-            "name": "Default Pattern",
-            "null_color": "darkred",
-            "null_textcolor": "black",
-            "null_value": "No data",
-            "pattern": "*",
-            "row_col_wrapper": "_",
-            "row_name": "_series_",
-            "textColors": "red|orange|green",
-            "textColors_overrides": "0->red|2->green|1->yellow",
-            "thresholds": "",
-            "time_based_thresholds": [],
-            "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-            "transform_values": "_value_|_value_|_value_",
-            "transform_values_overrides": "0->down|1->up",
-            "valueName": "current"
-          },
-          "default_title_for_rows": "Metric",
-          "description": "* DQ - Disqualified\n* SU - Suspended\n* UTD - Up to date",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
-          "font_size": "",
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 47
-          },
-          "hide_first_column": false,
-          "hide_headers": false,
-          "id": 735,
-          "patterns": [
-            {
-              "bgColors": "#2f382c|#2f382c|#2f382c",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "Payout",
-              "decimals": "2",
-              "defaultBGColor": "green",
-              "defaultTextColor": "",
-              "delimiter": ".",
-              "disabled": false,
-              "displayTemplate": "_value_",
-              "enable_bgColor": false,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": false,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": false,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "currencyUSD",
-              "name": "Payout",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*Payout$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "#caf2c2|#caf2c2|#caf2c2",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "0,0",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_value_|_value_|_value_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            },
-            {
-              "bgColors": "green|blue|blue",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "MTD Out",
-              "decimals": "1",
-              "defaultBGColor": "blue",
-              "defaultTextColor": "",
-              "delimiter": ".",
-              "displayTemplate": "_value_",
-              "enable_bgColor": false,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": false,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": false,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "decbytes",
-              "name": "Out",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*Out$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "red|orange|green",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_value_|_value_|_value_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            },
-            {
-              "bgColors": "green|green|green",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "MTD In",
-              "decimals": "1",
-              "defaultBGColor": "green",
-              "defaultTextColor": "",
-              "delimiter": ".",
-              "displayTemplate": "_value_",
-              "enable_bgColor": false,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": false,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": false,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "decbytes",
-              "name": "In",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*In$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "red|orange|green",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_value_|_value_|_value_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            },
-            {
-              "bgColors": "red|orange|green",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "Uptime",
-              "decimals": "1",
-              "defaultBGColor": "darkgreen",
-              "defaultTextColor": "",
-              "delimiter": ".",
-              "displayTemplate": "_value_",
-              "enable_bgColor": false,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": true,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": false,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "percent",
-              "name": "Uptime",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*Uptime$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "red|orange|lightgreen",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "99.5,99.8",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_value_|_value_|_value_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            },
-            {
-              "bgColors": "red|orange|green",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "Audit",
-              "decimals": "1",
-              "defaultBGColor": "darkgreen",
-              "defaultTextColor": "",
-              "delimiter": ".",
-              "displayTemplate": "_value_",
-              "enable_bgColor": false,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": true,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": false,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "percent",
-              "name": "Audit",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*Audit$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "red|orange|lightgreen",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "99.5,99.8",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_value_|_value_|_value_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            },
-            {
-              "bgColors": "#f16724|#f69e15|#fac30c|darkgreen",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "Vetting",
-              "decimals": "0",
-              "defaultBGColor": "",
-              "defaultTextColor": "lightgreen",
-              "delimiter": ".",
-              "displayTemplate": "_value_",
-              "enable_bgColor": true,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": false,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": false,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "short",
-              "name": "Vetting",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*Vetting$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "red|orange|green",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "15,70,100",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_value_|_value_|_value_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            },
-            {
-              "bgColors": "",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "DQ",
-              "decimals": "0",
-              "defaultBGColor": "",
-              "defaultTextColor": "",
-              "delimiter": ".",
-              "displayTemplate": "_value_",
-              "enable_bgColor": false,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": true,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": true,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "short",
-              "name": "Disqualified",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*Disqualified$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "green|red",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "1",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_fa-check-circle_|_fa-times-circle_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            },
-            {
-              "bgColors": "red|green",
-              "bgColors_overrides": "0->green|2->red|1->yellow",
-              "clickable_cells_link": "",
-              "col_name": "Susp",
-              "decimals": "0",
-              "defaultBGColor": "",
-              "defaultTextColor": "",
-              "delimiter": ".",
-              "displayTemplate": "_value_",
-              "enable_bgColor": false,
-              "enable_bgColor_overrides": false,
-              "enable_clickable_cells": false,
-              "enable_textColor": true,
-              "enable_textColor_overrides": false,
-              "enable_time_based_thresholds": false,
-              "enable_transform": true,
-              "enable_transform_overrides": false,
-              "filter": {
-                "value_above": "",
-                "value_below": ""
-              },
-              "format": "short",
-              "name": "Suspended",
-              "null_color": "darkred",
-              "null_textcolor": "black",
-              "null_value": "No data",
-              "pattern": "^.*Suspended$",
-              "row_col_wrapper": "_",
-              "row_name": "_0_",
-              "textColors": "green|red",
-              "textColors_overrides": "0->red|2->green|1->yellow",
-              "thresholds": "1",
-              "time_based_thresholds": [],
-              "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
-              "transform_values": "_fa-check-circle_|_fa-times-circle_",
-              "transform_values_overrides": "0->down|1->up",
-              "valueName": "current"
-            }
-          ],
-          "pluginVersion": "6.3.3",
-          "row_col_wrapper": "_",
-          "scopedVars": {
-            "node": {
-              "selected": false,
-              "text": "storj01",
-              "value": "storj01"
-            }
-          },
-          "sorting_props": {
-            "col_index": -1,
-            "direction": "desc"
-          },
-          "targets": [
-            {
-              "expr": "sum(storj_sat_month_ingress{nodename=~\"$node.*\"}) by(url)",
-              "format": "time_series",
-              "hide": false,
-              "legendFormat": "{{url}} | In",
-              "refId": "B"
-            },
-            {
-              "expr": "sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(url)",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "{{url}} | Out",
-              "refId": "A"
-            },
-            {
-              "expr": "(sum(storj_sat_summary{type=\"storageSummary\",nodename=~\"$node.*\"}) by(url) / (30 * 24) * 1.5  / 1000^4) + (sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(url) / 1000^4 * 20)",
-              "interval": "",
-              "legendFormat": "{{url}} | Payout",
-              "refId": "H"
-            },
-            {
-              "expr": "sum(storj_sat_audit{type=\"successCount\",nodename=~\"$node.*\"}) by (url)",
-              "legendFormat": "{{url}} | Vetting",
-              "refId": "E"
-            },
-            {
-              "expr": "avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"}) by(url) * 100",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "{{url}} | Uptime",
-              "refId": "C"
-            },
-            {
-              "expr": "avg(storj_sat_audit{type=\"score\",nodename=~\"$node.*\"}) by(url) * 100",
-              "hide": false,
-              "legendFormat": "{{url}} | Audit",
-              "refId": "D"
-            },
-            {
-              "expr": "sum(storj_sat_summary{type=\"disqualified\",nodename=~\"$node.*\"}) by (url)",
-              "legendFormat": "{{url}} | Disqualified",
-              "refId": "F"
-            },
-            {
-              "expr": "sum(storj_sat_summary{type=\"suspended\",nodename=~\"$node.*\"}) by (url)",
-              "legendFormat": "{{url}} | Suspended",
-              "refId": "G"
-            }
-          ],
-          "text_alignment_firstcolumn": "right",
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "$node Satellite summary table (monthly)",
-          "type": "yesoreyeram-boomtable-panel"
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 4,
-            "w": 12,
-            "x": 12,
-            "y": 47
-          },
-          "hiddenSeries": false,
-          "id": 736,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "scopedVars": {
-            "node": {
-              "selected": false,
-              "text": "storj01",
-              "value": "storj01"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "$$hashKey": "object:4580",
-              "alias": "/DiskRate/",
-              "color": "#B877D9",
-              "linewidth": 1,
-              "stack": "A"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(delta(storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}[5m])) by(nodename) * 8 / 300",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 4,
-              "legendFormat": "DiskRate {{nodename}}",
-              "refId": "B"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Disk Usage rate",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:4591",
-              "decimals": 2,
-              "format": "bps",
-              "label": "Storage IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:4592",
-              "decimals": 2,
-              "format": "bps",
-              "label": "Storage IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": true,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 4,
-            "w": 12,
-            "x": 12,
-            "y": 51
-          },
-          "hiddenSeries": false,
-          "id": 737,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "scopedVars": {
-            "node": {
-              "selected": false,
-              "text": "storj01",
-              "value": "storj01"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "$$hashKey": "object:4904",
-              "alias": "/RateIn/",
-              "color": "#37872D",
-              "stack": "B"
-            },
-            {
-              "$$hashKey": "object:4905",
-              "alias": "/RateOut/",
-              "color": "#1F60C4",
-              "stack": "C"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateIn {{nodename}}",
-              "refId": "B"
-            },
-            {
-              "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateOut {{nodename}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Ingress/Egress rate",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:4922",
-              "format": "bps",
-              "label": "Rate-out (-) / Rate-in (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:4923",
-              "decimals": null,
-              "format": "bps",
-              "label": "Net IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "repeat": "node",
       "title": "$node details",
       "type": "row"
+    },
+    {
+      "activePatternIndex": 1,
+      "datasource": "${DS_PROMETHEUS}",
+      "debug_mode": false,
+      "defaultPattern": {
+        "bgColors": "green|orange|red",
+        "bgColors_overrides": "0->green|2->red|1->yellow",
+        "clickable_cells_link": "",
+        "col_name": "",
+        "decimals": 2,
+        "defaultBGColor": "",
+        "defaultTextColor": "",
+        "delimiter": ":",
+        "displayTemplate": "_value_",
+        "enable_bgColor": true,
+        "enable_bgColor_overrides": false,
+        "enable_clickable_cells": false,
+        "enable_textColor": false,
+        "enable_textColor_overrides": false,
+        "enable_time_based_thresholds": false,
+        "enable_transform": false,
+        "enable_transform_overrides": false,
+        "filter": {
+          "value_above": "",
+          "value_below": ""
+        },
+        "format": "short",
+        "name": "Default Pattern",
+        "null_color": "darkred",
+        "null_textcolor": "black",
+        "null_value": "No data",
+        "pattern": "*",
+        "row_col_wrapper": "_",
+        "row_name": "_series_",
+        "textColors": "red|orange|green",
+        "textColors_overrides": "0->red|2->green|1->yellow",
+        "thresholds": "",
+        "time_based_thresholds": [],
+        "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+        "transform_values": "_value_|_value_|_value_",
+        "transform_values_overrides": "0->down|1->up",
+        "valueName": "current"
+      },
+      "default_title_for_rows": "Metric",
+      "description": "* DQ - Disqualified\n* SU - Suspended\n* UTD - Up to date",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "font_size": "",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 53
+      },
+      "hide_first_column": false,
+      "hide_headers": false,
+      "id": 735,
+      "patterns": [
+        {
+          "bgColors": "#2f382c|#2f382c|#2f382c",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "Payout",
+          "decimals": "2",
+          "defaultBGColor": "green",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "disabled": false,
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": false,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "currencyUSD",
+          "name": "Payout",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Payout$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "#caf2c2|#caf2c2|#caf2c2",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "0,0",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "bgColors": "green|blue|blue",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "MTD Out",
+          "decimals": "1",
+          "defaultBGColor": "blue",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": false,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "decbytes",
+          "name": "Out",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Out$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "red|orange|green",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "bgColors": "green|green|green",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "MTD In",
+          "decimals": "1",
+          "defaultBGColor": "green",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": false,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "decbytes",
+          "name": "In",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*In$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "red|orange|green",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "bgColors": "red|orange|green",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "Uptime",
+          "decimals": "1",
+          "defaultBGColor": "darkgreen",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": true,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "percent",
+          "name": "Uptime",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Uptime$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "red|orange|lightgreen",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "99.5,99.8",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "bgColors": "red|orange|green",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "Audit",
+          "decimals": "1",
+          "defaultBGColor": "darkgreen",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": true,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "percent",
+          "name": "Audit",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Audit$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "red|orange|lightgreen",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "99.5,99.8",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "bgColors": "#f16724|#f69e15|#fac30c|darkgreen",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "Vetting",
+          "decimals": "0",
+          "defaultBGColor": "",
+          "defaultTextColor": "lightgreen",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": true,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": false,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "short",
+          "name": "Vetting",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Vetting$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "red|orange|green",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "15,70,100",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "bgColors": "",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "DQ",
+          "decimals": "0",
+          "defaultBGColor": "",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": true,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": true,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "short",
+          "name": "Disqualified",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Disqualified$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "green|red",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "1",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_fa-check-circle_|_fa-times-circle_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "bgColors": "red|green",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "Susp",
+          "decimals": "0",
+          "defaultBGColor": "",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": true,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": true,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "short",
+          "name": "Suspended",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Suspended$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "green|red",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "1",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_fa-check-circle_|_fa-times-circle_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        }
+      ],
+      "pluginVersion": "6.3.3",
+      "row_col_wrapper": "_",
+      "sorting_props": {
+        "col_index": -1,
+        "direction": "desc"
+      },
+      "targets": [
+        {
+          "expr": "sum(storj_sat_month_ingress{nodename=~\"$node.*\"}) by(url)",
+          "format": "time_series",
+          "hide": false,
+          "legendFormat": "{{url}} | In",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(url)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{url}} | Out",
+          "refId": "A"
+        },
+        {
+          "expr": "(sum(storj_sat_summary{type=\"storageSummary\",nodename=~\"$node.*\"}) by(url) / (30 * 24) * 1.5  / 1000^4) + (sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(url) / 1000^4 * 20)",
+          "interval": "",
+          "legendFormat": "{{url}} | Payout",
+          "refId": "H"
+        },
+        {
+          "expr": "sum(storj_sat_audit{type=\"successCount\",nodename=~\"$node.*\"}) by (url)",
+          "legendFormat": "{{url}} | Vetting",
+          "refId": "E"
+        },
+        {
+          "expr": "avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"}) by(url) * 100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{url}} | Uptime",
+          "refId": "C"
+        },
+        {
+          "expr": "avg(storj_sat_audit{type=\"score\",nodename=~\"$node.*\"}) by(url) * 100",
+          "hide": false,
+          "legendFormat": "{{url}} | Audit",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(storj_sat_summary{type=\"disqualified\",nodename=~\"$node.*\"}) by (url)",
+          "legendFormat": "{{url}} | Disqualified",
+          "refId": "F"
+        },
+        {
+          "expr": "sum(storj_sat_summary{type=\"suspended\",nodename=~\"$node.*\"}) by (url)",
+          "legendFormat": "{{url}} | Suspended",
+          "refId": "G"
+        }
+      ],
+      "text_alignment_firstcolumn": "right",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$node Satellite summary table (monthly)",
+      "type": "yesoreyeram-boomtable-panel"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 53
+      },
+      "hiddenSeries": false,
+      "id": 736,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:4580",
+          "alias": "/DiskRate/",
+          "color": "#B877D9",
+          "linewidth": 1,
+          "stack": "A"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(delta(storj_total_diskspace{type=\"used\",nodename=~\"$node.*\"}[5m])) by(nodename) * 8 / 300",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "DiskRate {{nodename}}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Disk Usage rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:4591",
+          "decimals": 2,
+          "format": "bps",
+          "label": "Storage IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:4592",
+          "decimals": 2,
+          "format": "bps",
+          "label": "Storage IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": true,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 57
+      },
+      "hiddenSeries": false,
+      "id": 737,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:4904",
+          "alias": "/RateIn/",
+          "color": "#37872D",
+          "stack": "B"
+        },
+        {
+          "$$hashKey": "object:4905",
+          "alias": "/RateOut/",
+          "color": "#1F60C4",
+          "stack": "C"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateIn {{nodename}}",
+          "refId": "B"
+        },
+        {
+          "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateOut {{nodename}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Ingress/Egress rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:4922",
+          "format": "bps",
+          "label": "Rate-out (-) / Rate-in (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:4923",
+          "decimals": null,
+          "format": "bps",
+          "label": "Net IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "collapsed": true,
@@ -5637,7 +5623,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 65
+        "y": 223
       },
       "id": 672,
       "panels": [
@@ -6474,7 +6460,7 @@
     ]
   },
   "timezone": "",
-  "title": "Storj-Exporter-Promtail",
+  "title": "Storj-Exporter-Logs",
   "uid": "a4ea4h4ej6kmv",
-  "version": 39
+  "version": 46
 }

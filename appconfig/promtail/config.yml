@@ -10,35 +10,28 @@ clients:
 
 scrape_configs:
 
-## Optional syslog logging to Loki
-# - job_name: system
-#   static_configs:
-#   - targets:
-#       - localhost
-#     labels:
-#       job: varlogs
-#       __path__: /var/log/*log
-
-## Optional systemd journal logging to Loki
-# - job_name: journal
-#   journal:
-#     json: false
-#     max_age: 12h
-#     path: /var/log/journal
-#     labels:
-#       job: systemd-journal
-#   relabel_configs:
-#     - source_labels: ['__journal__systemd_unit']
-#       target_label: 'unit'
+#### Edit the node labels below to suit your configuration #####
 
 ## Storj node logging to Loki + Prometheus metrics generation
 ## Requires log.encoding="json"
+## Ensure nodename is the same as in Prometheus config for Storj-Exporter
 - job_name: storj
-  loki_push_api:
-    server:
-      http_listen_port: 3500
-      grpc_listen_port: 3600
-    use_incoming_timestamp: true
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: storj
+      nodename: storj01
+      __path__: /mnt/storj/log/storj01.log
+  # - targets:
+  #     - localhost
+  #   labels:
+  #     job: storj
+  #     nodename: storj02
+  #     __path__: /mnt/storj/log/storj02.log
+
+##### Do not edit below this line #####
+
   pipeline_stages:
 
   - json:
@@ -109,13 +102,11 @@ scrape_configs:
       # error:
       message:
       messagetype:
-      nodename: compose_service
+      nodename: 
 
   ## Drop unnecessary labels to reduce log cardinality and/or redundancy with other labels
   - labeldrop:
       - filename
-      - compose_service
-      - compose_project
 
   ## error label, whether simplified or not, is not required in the dashboard
   ## workaround for all unique write tcp error messages..

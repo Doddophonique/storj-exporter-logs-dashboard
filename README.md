@@ -1,4 +1,4 @@
-# Docker Storj Node config with Loki, Prometheus, and Grafana
+# Storj Dashboard combining Grafana Loki logs with Storj-Exporter
 
 This config repo builds on the excellent work done at [kevinkk525/storj-log-exporter](https://github.com/kevinkk525/storj-log-exporter) and proposes and alternative method using Grafana Loki and Promtail for ingesting Storj node logs and producing Prometheus metrics.
 

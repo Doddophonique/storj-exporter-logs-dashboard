@@ -46,7 +46,7 @@ log.encoding: "json"
 
 ```bash
 # can be stdout, stderr, or a filename
-log.output: /mnt/storj/log/storj01.log
+log.output: /mnt/storj/logs/storj01.log
 ```
 
 Ensure that the log file location is bind mounted in the Storj docker container.
@@ -74,7 +74,7 @@ Edit `./appconfig/promtail/config.yml` for `nodename` and `__path__` values, whe
   #   labels:
   #     job: storj
   #     nodename: storj02
-  #     __path__: /mnt/storj/log/storj02.log
+  #     __path__: /mnt/storj/logs/storj02.log
 ```
 
 ### Configure Prometheus

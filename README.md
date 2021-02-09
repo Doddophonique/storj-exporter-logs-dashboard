@@ -68,7 +68,7 @@ Edit `./appconfig/promtail/config.yml` for `nodename` and `__path__` values, whe
     labels:
       job: storj
       nodename: storj01   # Same as prometheus config
-      __path__: /mnt/storj/log/storj01.log
+      __path__: /mnt/storj/logs/storj01.log
   # - targets:
   #     - localhost
   #   labels:

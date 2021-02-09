@@ -49,6 +49,8 @@ log.encoding: "json"
 log.output: /mnt/storj/log/storj01.log
 ```
 
+Ensure that the log file location is bind mounted in the Storj docker container.
+
 ### Configure Promtail
 
 Edit `./appconfig/promtail/config.yml` for `nodename` and `__path__` values, where `__path__` is the log file configured in the Storj node `config.yaml`.
@@ -107,7 +109,7 @@ Also add the Promtail metrics endpoint, where all the log metrics will be scrape
 Start the service with the following `docker run` commands:
 
 ```shell
-docker run -d --name promtail -p 9080:9080 -v ./appconfig/promtail:/config -v /path/to/appdata/promtail:/data grafana/promtail:2.1.0 -config.file=/config/config.yml
+docker run -d --name promtail -p 9080:9080 -v /mnt/storj/logs:/mnt/storj/logs -v ./appconfig/promtail:/config -v /path/to/appdata/promtail:/data grafana/promtail:2.1.0 -config.file=/config/config.yml
 docker run -d --name loki -p 3100:3100 -v ./appconfig/loki:/config -v /path/to/appdata/loki:/data grafana/loki:2.1.0 -config.file=/config/local-config.yaml
 ```
 
@@ -129,7 +131,7 @@ The [Notes section from Storj-Log-Exporter](https://github.com/kevinkk525/storj-
 
 ## Logging Limits
 
-- Loki has been configured with a 30 day log retention time. Adjust `retentiion_period` under `table_manager` in `./appconfig/loki/local-config.yaml` if a different retention time is desired.
+- Loki has been configured with a 30 day log retention time. Adjust `retention_period` under `table_manager` in `./appconfig/loki/local-config.yaml` if a different retention time is desired.
 
 ## TODO
 

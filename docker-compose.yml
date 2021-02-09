@@ -6,6 +6,7 @@ services:
     ports:
       - "9080:9080"
     volumes:
+      - /mnt/storj/logs:/mnt/storj/logs
       - ./appconfig/promtail:/config
       - /path/to/appdata/promtail:/data
     command: -config.file=/config/config.yml

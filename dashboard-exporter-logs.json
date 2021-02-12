@@ -79,7 +79,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1612803018697,
+  "iteration": 1613087125119,
   "links": [
     {
       "icon": "external link",
@@ -1150,7 +1150,7 @@
         "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
-            "delta"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -1161,25 +1161,32 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"INFO\"})",
+          "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"INFO\"}[$__range])))",
+          "instant": false,
           "interval": "",
+          "intervalFactor": 1,
           "legendFormat": "Info",
           "refId": "A"
         },
         {
-          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"WARN\"}) OR vector(0)",
+          "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"WARN\"}[$__range]))) OR vector(0)",
+          "instant": false,
           "interval": "",
+          "intervalFactor": 1,
           "legendFormat": "Warn",
           "refId": "B"
         },
         {
-          "expr": "sum(storj_log_errors_corr{nodename=~\"$node.*\"}) OR vector(0)",
+          "exemplar": false,
+          "expr": "floor(sum(delta(storj_log_errors_corr{nodename=~\"$node.*\",loglevel=\"ERROR\"}[$__range]))) OR vector(0)",
+          "instant": false,
           "interval": "",
           "legendFormat": "Error (cor.)",
           "refId": "D"
         },
         {
-          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"})  OR vector(0)",
+          "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}[$__range])))  OR vector(0)",
+          "instant": false,
           "interval": "",
           "legendFormat": "Fatal",
           "refId": "C"
@@ -2338,7 +2345,6 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:1153",
           "alias": "/DiskRate/",
           "color": "#B877D9",
           "linewidth": 1,
@@ -2380,7 +2386,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1164",
           "decimals": 2,
           "format": "bps",
           "label": "Storage IO rate",
@@ -2390,7 +2395,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1165",
           "decimals": 2,
           "format": "bps",
           "label": "Storage IO rate",
@@ -2455,13 +2459,11 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:3092",
           "alias": "/RateIn/",
           "color": "#37872D",
           "stack": "B"
         },
         {
-          "$$hashKey": "object:3093",
           "alias": "/RateOut/",
           "color": "#1F60C4",
           "stack": "C",
@@ -2508,7 +2510,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:3110",
           "format": "bps",
           "label": "Rate-out (-) / Rate-in (+)",
           "logBase": 1,
@@ -2517,7 +2518,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:3111",
           "decimals": null,
           "format": "bps",
           "label": "Net IO rate",
@@ -2584,27 +2584,23 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:272",
           "alias": "/RateOut/",
           "color": "#96D98D",
           "stack": "A",
           "transform": "negative-Y"
         },
         {
-          "$$hashKey": "object:273",
           "alias": "/RateIn/",
           "color": "#FFB357",
           "stack": "B"
         },
         {
-          "$$hashKey": "object:274",
           "alias": "0",
           "color": "rgb(4, 4, 4)",
           "hideTooltip": true,
           "legend": false
         },
         {
-          "$$hashKey": "object:275",
           "alias": "/RateDelete/",
           "color": "#8F3BB8",
           "stack": "C",
@@ -2667,7 +2663,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:310",
           "format": "pps",
           "label": "Rate-out (-) / Rate-in (+)",
           "logBase": 1,
@@ -2676,7 +2671,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:311",
           "decimals": null,
           "format": "bps",
           "label": "Net monthly sum",
@@ -2742,13 +2736,11 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:1691",
           "alias": "/RateIn/",
           "color": "#37872D",
           "stack": "B"
         },
         {
-          "$$hashKey": "object:1692",
           "alias": "/RateOut/",
           "color": "#1F60C4",
           "stack": "C",
@@ -2795,7 +2787,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1709",
           "format": "bps",
           "label": "Rate-out (-) / Rate-in (+)",
           "logBase": 1,
@@ -2804,7 +2795,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1710",
           "decimals": null,
           "format": "bps",
           "label": "Net IO rate",
@@ -2870,13 +2860,11 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:1790",
           "alias": "/RepairIn/",
           "color": "#37872D",
           "stack": "A"
         },
         {
-          "$$hashKey": "object:1791",
           "alias": "/RepairOut/",
           "color": "#1F60C4",
           "stack": "B",
@@ -2923,7 +2911,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1808",
           "format": "bps",
           "label": "Rate Out (-) / Rate In (+)",
           "logBase": 1,
@@ -2932,7 +2919,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1809",
           "decimals": null,
           "format": "bps",
           "label": "Net IO rate",
@@ -3008,7 +2994,6 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:1998",
               "alias": "/DiskRate/",
               "linewidth": 1,
               "stack": "A"
@@ -3049,7 +3034,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:2007",
               "decimals": 2,
               "format": "bps",
               "label": "Storage IO rate",
@@ -3059,7 +3043,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:2008",
               "decimals": 2,
               "format": "bps",
               "label": "Storage IO rate",
@@ -3124,12 +3107,10 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:2185",
               "alias": "/RateIn/",
               "stack": "B"
             },
             {
-              "$$hashKey": "object:2186",
               "alias": "/RateOut/",
               "stack": "C",
               "transform": "negative-Y"
@@ -3175,7 +3156,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:2199",
               "format": "bps",
               "label": "Rate-out (-) / Rate-in (+)",
               "logBase": 1,
@@ -3184,7 +3164,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:2200",
               "decimals": null,
               "format": "bps",
               "label": "Net IO rate",
@@ -3251,27 +3230,23 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:391",
               "alias": "/RateOut/",
               "color": "#96D98D",
               "stack": "A",
               "transform": "negative-Y"
             },
             {
-              "$$hashKey": "object:392",
               "alias": "/RateIn/",
               "color": "#FFB357",
               "stack": "B"
             },
             {
-              "$$hashKey": "object:393",
               "alias": "0",
               "color": "rgb(4, 4, 4)",
               "hideTooltip": true,
               "legend": false
             },
             {
-              "$$hashKey": "object:394",
               "alias": "/RateDelete/",
               "color": "#8F3BB8",
               "stack": "C",
@@ -3334,7 +3309,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:429",
               "format": "pps",
               "label": "Rate-out (-) / Rate-in (+)",
               "logBase": 1,
@@ -3343,7 +3317,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:430",
               "decimals": null,
               "format": "bps",
               "label": "Net monthly sum",
@@ -3409,12 +3382,10 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:3067",
               "alias": "/RateIn/",
               "stack": "B"
             },
             {
-              "$$hashKey": "object:3068",
               "alias": "/RateOut/",
               "stack": "C",
               "transform": "negative-Y"
@@ -3460,7 +3431,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:3081",
               "format": "bps",
               "label": "Rate-out (-) / Rate-in (+)",
               "logBase": 1,
@@ -3469,7 +3439,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:3082",
               "decimals": null,
               "format": "bps",
               "label": "Net IO rate",
@@ -3535,12 +3504,10 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:3259",
               "alias": "/RepairIn/",
               "stack": "A"
             },
             {
-              "$$hashKey": "object:3260",
               "alias": "/RepairOut/",
               "stack": "B",
               "transform": "negative-Y"
@@ -3586,7 +3553,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:3273",
               "format": "bps",
               "label": "Rate Out (-) / Rate In (+)",
               "logBase": 1,
@@ -3595,7 +3561,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:3274",
               "decimals": null,
               "format": "bps",
               "label": "Net IO rate",
@@ -3677,27 +3642,23 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:510",
               "alias": "/RateOut/",
               "color": "#96D98D",
               "stack": "A",
               "transform": "negative-Y"
             },
             {
-              "$$hashKey": "object:511",
               "alias": "/RateIn/",
               "color": "#FFB357",
               "stack": "B"
             },
             {
-              "$$hashKey": "object:512",
               "alias": "0",
               "color": "rgb(4, 4, 4)",
               "hideTooltip": true,
               "legend": false
             },
             {
-              "$$hashKey": "object:513",
               "alias": "/RateDelete/",
               "color": "#8F3BB8",
               "stack": "C",
@@ -3760,7 +3721,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:548",
               "format": "pps",
               "label": "Rate-out (-) / Rate-in (+)",
               "logBase": 1,
@@ -3769,7 +3729,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:549",
               "decimals": null,
               "format": "bps",
               "label": "Net monthly sum",
@@ -3834,12 +3793,10 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:3887",
               "alias": "/RateIn/",
               "stack": "B"
             },
             {
-              "$$hashKey": "object:3888",
               "alias": "/RateOut/",
               "stack": "C",
               "transform": "negative-Y"
@@ -3885,7 +3842,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:3901",
               "format": "bps",
               "label": "Rate-out (-) / Rate-in (+)",
               "logBase": 1,
@@ -3894,7 +3850,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:3902",
               "decimals": null,
               "format": "bps",
               "label": "Net IO rate",
@@ -3960,12 +3915,10 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:4079",
               "alias": "/RateIn/",
               "stack": "B"
             },
             {
-              "$$hashKey": "object:4080",
               "alias": "/RateOut/",
               "stack": "C",
               "transform": "negative-Y"
@@ -4011,7 +3964,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:4093",
               "format": "bps",
               "label": "Rate-out (-) / Rate-in (+)",
               "logBase": 1,
@@ -4020,7 +3972,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:4094",
               "decimals": null,
               "format": "bps",
               "label": "Net IO rate",
@@ -4086,12 +4037,10 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:4295",
               "alias": "/RepairIn/",
               "stack": "A"
             },
             {
-              "$$hashKey": "object:4296",
               "alias": "/RepairOut/",
               "stack": "B",
               "transform": "negative-Y"
@@ -4137,7 +4086,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:4309",
               "format": "bps",
               "label": "Rate Out (-) / Rate In (+)",
               "logBase": 1,
@@ -4146,7 +4094,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:4310",
               "decimals": null,
               "format": "bps",
               "label": "Net IO rate",
@@ -4230,12 +4177,10 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:635",
           "alias": "/Upload/",
           "color": "#37872D"
         },
         {
-          "$$hashKey": "object:636",
           "alias": "Upload average",
           "color": "#C4162A"
         }
@@ -4279,7 +4224,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:649",
           "decimals": 3,
           "format": "percentunit",
           "label": "",
@@ -4289,7 +4233,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:650",
           "decimals": 2,
           "format": "bps",
           "label": "Storage sum",
@@ -4354,12 +4297,10 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:547",
           "alias": "/Download/",
           "color": "#5794F2"
         },
         {
-          "$$hashKey": "object:548",
           "alias": "/Download average/",
           "color": "#C4162A"
         }
@@ -4406,7 +4347,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:561",
           "decimals": 3,
           "format": "percentunit",
           "label": "",
@@ -4416,7 +4356,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:562",
           "decimals": 2,
           "format": "bps",
           "label": "Storage sum",
@@ -4471,7 +4410,7 @@
             "h": 4,
             "w": 5,
             "x": 0,
-            "y": 33
+            "y": 52
           },
           "id": 790,
           "links": [],
@@ -4548,7 +4487,7 @@
             "h": 4,
             "w": 5,
             "x": 5,
-            "y": 33
+            "y": 52
           },
           "id": 755,
           "links": [],
@@ -4625,7 +4564,7 @@
             "h": 4,
             "w": 5,
             "x": 10,
-            "y": 33
+            "y": 52
           },
           "id": 754,
           "links": [],
@@ -4699,7 +4638,7 @@
             "h": 7,
             "w": 8,
             "x": 0,
-            "y": 37
+            "y": 56
           },
           "hiddenSeries": false,
           "id": 792,
@@ -4724,7 +4663,12 @@
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "/Egress/",
+              "transform": "negative-Y"
+            }
+          ],
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
@@ -4740,7 +4684,7 @@
               "refId": "D"
             },
             {
-              "expr": "-(sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[5m])))",
+              "expr": "(sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m]))/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[5m])))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4757,7 +4701,7 @@
           "title": "Average Piece Size",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -4770,7 +4714,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:2403",
               "format": "decbytes",
               "label": null,
               "logBase": 1,
@@ -4779,7 +4722,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:2404",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -4819,7 +4761,7 @@
             "h": 7,
             "w": 8,
             "x": 8,
-            "y": 37
+            "y": 56
           },
           "hiddenSeries": false,
           "id": 793,
@@ -4844,7 +4786,12 @@
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "/Egress/",
+              "transform": "negative-Y"
+            }
+          ],
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
@@ -4860,7 +4807,7 @@
               "refId": "D"
             },
             {
-              "expr": "-(sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(type)/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\",type!=\"audit\"}[5m])) by(type))",
+              "expr": "(sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(type)/sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\",type!=\"audit\"}[5m])) by(type))",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -4877,7 +4824,7 @@
           "title": "Average Piece Size (by type)",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -4890,7 +4837,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:2512",
               "format": "decbytes",
               "label": null,
               "logBase": 1,
@@ -4899,7 +4845,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:2513",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -5423,7 +5368,6 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:4580",
           "alias": "/DiskRate/",
           "color": "#B877D9",
           "linewidth": 1,
@@ -5465,7 +5409,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:4591",
           "decimals": 2,
           "format": "bps",
           "label": "Storage IO rate",
@@ -5475,7 +5418,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:4592",
           "decimals": 2,
           "format": "bps",
           "label": "Storage IO rate",
@@ -5540,16 +5482,15 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:4904",
           "alias": "/RateIn/",
           "color": "#37872D",
           "stack": "B"
         },
         {
-          "$$hashKey": "object:4905",
           "alias": "/RateOut/",
           "color": "#1F60C4",
-          "stack": "C"
+          "stack": "C",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -5565,7 +5506,7 @@
           "refId": "B"
         },
         {
-          "expr": "-sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
+          "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(nodename) * 8",
           "interval": "",
           "intervalFactor": 5,
           "legendFormat": "RateOut {{nodename}}",
@@ -5592,7 +5533,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:4922",
           "format": "bps",
           "label": "Rate-out (-) / Rate-in (+)",
           "logBase": 1,
@@ -5601,7 +5541,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:4923",
           "decimals": null,
           "format": "bps",
           "label": "Net IO rate",
@@ -5651,7 +5590,7 @@
             "h": 6,
             "w": 5,
             "x": 0,
-            "y": 66
+            "y": 224
           },
           "hiddenSeries": false,
           "id": 794,
@@ -5660,13 +5599,13 @@
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
           "lines": true,
           "linewidth": 1,
-          "nullPointMode": "null",
+          "nullPointMode": "null as zero",
           "options": {
             "alertThreshold": true
           },
@@ -5675,16 +5614,21 @@
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "/.*/",
+              "color": "#73BF69"
+            }
+          ],
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(storj_pieces_upload_started)-sum(storj_pieces_upload_successful)-(sum(storj_pieces_upload_canceled) or vector(0))-(sum(storj_pieces_upload_failed) or vector(0))-(sum(storj_pieces_upload_rejected) or vector(0))",
+              "expr": "(sum(storj_pieces_upload_started{nodename=~\"$node.*\"})) - (sum(storj_pieces_upload_successful{nodename=~\"$node.*\"})) - (sum(storj_pieces_upload_canceled{nodename=~\"$node.*\"})) OR vector(0) - (sum(storj_pieces_upload_failed{nodename=~\"$node.*\"})) OR vector(0) - (sum(storj_pieces_upload_rejected{nodename=~\"$node.*\"})) OR vector(0)",
               "interval": "",
               "intervalFactor": 10,
-              "legendFormat": "Sum Upload messages",
+              "legendFormat": "{{nodename}}",
               "refId": "A"
             }
           ],
@@ -5753,7 +5697,7 @@
             "h": 6,
             "w": 5,
             "x": 5,
-            "y": 66
+            "y": 224
           },
           "hiddenSeries": false,
           "id": 795,
@@ -5783,7 +5727,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(storj_pieces_download_started)-sum(storj_pieces_download_successful)-(sum(storj_pieces_download_canceled) or vector(0))-(sum(storj_pieces_download_failed) or vector(0))",
+              "expr": "sum(storj_pieces_download_started{nodename=~\"$node.*\"}) - sum(storj_pieces_download_successful{nodename=~\"$node.*\"}) - (sum(storj_pieces_download_canceled{nodename=~\"$node.*\"}) or vector(0)) - (sum(storj_pieces_download_failed{nodename=~\"$node.*\"}) or vector(0))",
               "interval": "",
               "intervalFactor": 10,
               "legendFormat": "Sum Download messages",
@@ -5862,7 +5806,7 @@
             "h": 6,
             "w": 2,
             "x": 10,
-            "y": 66
+            "y": 224
           },
           "id": 614,
           "options": {
@@ -5917,7 +5861,7 @@
             "h": 7,
             "w": 12,
             "x": 12,
-            "y": 66
+            "y": 224
           },
           "hiddenSeries": false,
           "id": 694,
@@ -5983,7 +5927,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:1207",
               "format": "currencyUSD",
               "label": "",
               "logBase": 1,
@@ -5992,7 +5935,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:1208",
               "decimals": null,
               "format": "bps",
               "label": "Net monthly sum",
@@ -6027,7 +5969,7 @@
             "h": 6,
             "w": 12,
             "x": 0,
-            "y": 72
+            "y": 230
           },
           "hiddenSeries": false,
           "id": 299,
@@ -6057,20 +5999,17 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:1290",
               "alias": "/RateOut/",
               "stack": "A",
               "transform": "negative-Y",
               "yaxis": 2
             },
             {
-              "$$hashKey": "object:1291",
               "alias": "/RateIn/",
               "stack": "B",
               "yaxis": 2
             },
             {
-              "$$hashKey": "object:1292",
               "alias": "/EgressPieceSize/",
               "fill": 2,
               "fillGradient": 0,
@@ -6079,7 +6018,6 @@
               "transform": "negative-Y"
             },
             {
-              "$$hashKey": "object:1293",
               "alias": "/IngressPieceSize/",
               "fill": 2,
               "fillGradient": 0,
@@ -6131,7 +6069,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:1338",
               "format": "decbytes",
               "label": "Sum-out (-) / Sum-in (+)",
               "logBase": 1,
@@ -6140,7 +6077,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:1339",
               "decimals": null,
               "format": "bps",
               "label": "Rate-out (-) / Rate-in (+)",
@@ -6162,6 +6098,7 @@
           "dashes": false,
           "datasource": "${DS_PROMETHEUS}",
           "decimals": null,
+          "description": "",
           "fieldConfig": {
             "defaults": {
               "custom": {},
@@ -6175,7 +6112,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 73
+            "y": 231
           },
           "hiddenSeries": false,
           "id": 673,
@@ -6205,12 +6142,10 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "$$hashKey": "object:779",
               "alias": "/Errors/",
               "color": "#C4162A"
             },
             {
-              "$$hashKey": "object:780",
               "alias": "/Fatal/",
               "color": "#B877D9"
             }
@@ -6220,13 +6155,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(storj_log_errors_corr{nodename=~\"$node.*\"}) by(nodename,message) OR vector (0)",
+              "expr": "floor(sum(delta(storj_log_errors_corr{nodename=~\"$node.*\"}[$__range])) by (nodename,message)) OR vector (0)",
               "interval": "",
               "legendFormat": "Errors {{nodename}}: {{message}}",
               "refId": "A"
             },
             {
-              "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}) by(nodename,message) OR vector(0)",
+              "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}[$__range])) by(nodename,message)) OR vector(0)",
               "interval": "",
               "legendFormat": "Fatal {{nodename}}: {{message}}",
               "refId": "C"
@@ -6236,7 +6171,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Cumulative Errors (Corr) by Node (since Promtail restart)",
+          "title": "Errors (Corr) by Node (since Promtail restart)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -6252,7 +6187,6 @@
           },
           "yaxes": [
             {
-              "$$hashKey": "object:793",
               "decimals": 2,
               "format": "short",
               "label": "",
@@ -6262,7 +6196,6 @@
               "show": true
             },
             {
-              "$$hashKey": "object:794",
               "decimals": 2,
               "format": "bps",
               "label": "Storage sum",
@@ -6330,7 +6263,7 @@
             "h": 7,
             "w": 12,
             "x": 0,
-            "y": 78
+            "y": 236
           },
           "id": 722,
           "patterns": [
@@ -6462,5 +6395,5 @@
   "timezone": "",
   "title": "Storj-Exporter-Logs",
   "uid": "a4ea4h4ej6kmv",
-  "version": 46
+  "version": 52
 }

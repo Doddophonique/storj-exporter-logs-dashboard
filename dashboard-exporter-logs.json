@@ -79,7 +79,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1613087125119,
+  "iteration": 1613113476060,
   "links": [
     {
       "icon": "external link",
@@ -100,6 +100,14 @@
       "url": "https://github.com/fmoledina/docker-storj-config"
     },
     {
+      "icon": "question",
+      "tags": [],
+      "targetBlank": true,
+      "title": "Storj-Exporter-Logs forum thread",
+      "type": "link",
+      "url": "https://forum.storj.io/t/loki-storj-exporter-logs-and-storj-logs-dashboard/11651"
+    },
+    {
       "icon": "external link",
       "tags": [],
       "targetBlank": true,
@@ -108,7 +116,7 @@
       "url": "https://github.com/anclrii/Storj-Exporter"
     },
     {
-      "icon": "external link",
+      "icon": "question",
       "tags": [],
       "targetBlank": true,
       "title": "Storj-Exporter forum thread",
@@ -1150,7 +1158,7 @@
         "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "delta"
           ],
           "fields": "",
           "values": false
@@ -1161,7 +1169,7 @@
       "pluginVersion": "7.4.0",
       "targets": [
         {
-          "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"INFO\"}[$__range])))",
+          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"INFO\"})",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1169,7 +1177,7 @@
           "refId": "A"
         },
         {
-          "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"WARN\"}[$__range]))) OR vector(0)",
+          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"WARN\"}) OR vector(0)",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1178,14 +1186,14 @@
         },
         {
           "exemplar": false,
-          "expr": "floor(sum(delta(storj_log_errors_corr{nodename=~\"$node.*\",loglevel=\"ERROR\"}[$__range]))) OR vector(0)",
+          "expr": "sum(storj_log_errors_corr{nodename=~\"$node.*\",loglevel=\"ERROR\"}) OR vector(0)",
           "instant": false,
           "interval": "",
           "legendFormat": "Error (cor.)",
           "refId": "D"
         },
         {
-          "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}[$__range])))  OR vector(0)",
+          "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"})  OR vector(0)",
           "instant": false,
           "interval": "",
           "legendFormat": "Fatal",
@@ -6155,13 +6163,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "floor(sum(delta(storj_log_errors_corr{nodename=~\"$node.*\"}[$__range])) by (nodename,message)) OR vector (0)",
+              "expr": "sum(storj_log_errors_corr{nodename=~\"$node.*\"}) by (nodename,message) OR vector (0)",
               "interval": "",
               "legendFormat": "Errors {{nodename}}: {{message}}",
               "refId": "A"
             },
             {
-              "expr": "floor(sum(delta(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}[$__range])) by(nodename,message)) OR vector(0)",
+              "expr": "sum(storj_log_levels{nodename=~\"$node.*\",loglevel=\"FATAL\"}) by(nodename,message) OR vector(0)",
               "interval": "",
               "legendFormat": "Fatal {{nodename}}: {{message}}",
               "refId": "C"
@@ -6171,7 +6179,7 @@
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Errors (Corr) by Node (since Promtail restart)",
+          "title": "Cumulative Errors (Corr) by Node (since Promtail restart)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -6395,5 +6403,5 @@
   "timezone": "",
   "title": "Storj-Exporter-Logs",
   "uid": "a4ea4h4ej6kmv",
-  "version": 52
+  "version": 54
 }

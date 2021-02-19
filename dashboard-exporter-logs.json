@@ -79,7 +79,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1613750008479,
+  "iteration": 1613751275920,
   "links": [
     {
       "icon": "external link",
@@ -1039,13 +1039,13 @@
           "refId": "B"
         },
         {
-          "expr": "floor(min(storj_sat_audit{type=~\"unknownScore|suspensionScore\",nodename=~\"$node.*\"}*10000))/10000",
+          "expr": "floor(min(storj_sat_audit{type=\"suspensionScore\",nodename=~\"$node.*\"}*10000))/10000",
           "interval": "",
           "legendFormat": "Min Suspension",
           "refId": "F"
         },
         {
-          "expr": "floor(min(storj_sat_audit{type=~\"score|auditScore\", nodename=~\"$node.*\"}*10000))/10000",
+          "expr": "floor(min(storj_sat_audit{type=\"auditScore\", nodename=~\"$node.*\"}*10000))/10000",
           "interval": "",
           "legendFormat": "Min Audit",
           "refId": "D"
@@ -2234,14 +2234,14 @@
           "refId": "J"
         },
         {
-          "expr": "floor(avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"} or storj_sat_audit{type=\"onlineScore\", nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"onlineScore\", nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
           "hide": false,
           "interval": "",
           "legendFormat": "{{nodename}} | Uptime",
           "refId": "C"
         },
         {
-          "expr": "floor(avg(storj_sat_audit{type=~\"score|auditScore\", nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"auditScore\", nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
           "hide": false,
           "interval": "",
           "legendFormat": "{{nodename}} | Audit",
@@ -2255,7 +2255,7 @@
           "refId": "K"
         },
         {
-          "expr": "floor(avg(storj_sat_audit{type=~\"unknownScore|suspensionScore\",nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"suspensionScore\",nodename=~\"$node.*\"}) by(nodename) * 10000) / 100",
           "interval": "",
           "legendFormat": "{{nodename}} | Suspension",
           "refId": "O"
@@ -4886,7 +4886,7 @@
       "type": "row"
     },
     {
-      "activePatternIndex": 1,
+      "activePatternIndex": 9,
       "datasource": "${DS_PROMETHEUS}",
       "debug_mode": false,
       "defaultPattern": {
@@ -5071,7 +5071,7 @@
           "clickable_cells_link": "",
           "col_name": "Uptime",
           "decimals": "1",
-          "defaultBGColor": "darkgreen",
+          "defaultBGColor": "",
           "defaultTextColor": "",
           "delimiter": ".",
           "displayTemplate": "_value_",
@@ -5110,7 +5110,7 @@
           "clickable_cells_link": "",
           "col_name": "Audit",
           "decimals": "1",
-          "defaultBGColor": "darkgreen",
+          "defaultBGColor": "",
           "defaultTextColor": "",
           "delimiter": ".",
           "displayTemplate": "_value_",
@@ -5225,7 +5225,7 @@
           "bgColors": "red|green",
           "bgColors_overrides": "0->green|2->red|1->yellow",
           "clickable_cells_link": "",
-          "col_name": "Susp",
+          "col_name": "SU",
           "decimals": "0",
           "defaultBGColor": "",
           "defaultTextColor": "",
@@ -5259,6 +5259,84 @@
           "transform_values": "_fa-check-circle_|_fa-times-circle_",
           "transform_values_overrides": "0->down|1->up",
           "valueName": "current"
+        },
+        {
+          "bgColors": "green|green|green",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "Used",
+          "decimals": "1",
+          "defaultBGColor": "darkviolet",
+          "defaultTextColor": "",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_textColor": false,
+          "enable_textColor_overrides": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "decbytes",
+          "name": "SpaceUsed",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*SpaceUsed$",
+          "row_col_wrapper": "_",
+          "row_name": "_0_",
+          "textColors": "red|orange|green",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "thresholds": "",
+          "time_based_thresholds": [],
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "valueName": "current"
+        },
+        {
+          "row_col_wrapper": "_",
+          "bgColors": "green|orange|red",
+          "bgColors_overrides": "0->green|2->red|1->yellow",
+          "textColors": "red|orange|lightgreen",
+          "textColors_overrides": "0->red|2->green|1->yellow",
+          "clickable_cells_link": "",
+          "col_name": "Susp.",
+          "decimals": "1",
+          "delimiter": ".",
+          "displayTemplate": "_value_",
+          "defaultBGColor": "",
+          "defaultTextColor": "",
+          "enable_bgColor": false,
+          "enable_bgColor_overrides": false,
+          "enable_textColor": true,
+          "enable_textColor_overrides": false,
+          "enable_clickable_cells": false,
+          "enable_time_based_thresholds": false,
+          "enable_transform": false,
+          "enable_transform_overrides": false,
+          "filter": {
+            "value_above": "",
+            "value_below": ""
+          },
+          "format": "percent",
+          "name": "Suspension",
+          "null_color": "darkred",
+          "null_textcolor": "black",
+          "null_value": "No data",
+          "pattern": "^.*Suspension$",
+          "row_name": "_0_",
+          "thresholds": "99.5,99.8",
+          "time_based_thresholds": [],
+          "transform_values": "_value_|_value_|_value_",
+          "transform_values_overrides": "0->down|1->up",
+          "tooltipTemplate": "Series : _series_ <br/>Row Name : _row_name_ <br/>Col Name : _col_name_ <br/>Value : _value_",
+          "valueName": "current"
         }
       ],
       "pluginVersion": "6.3.3",
@@ -5286,7 +5364,13 @@
           "refId": "A"
         },
         {
-          "expr": "(sum(storj_sat_summary{type=\"storageSummary\",nodename=~\"$node.*\"}) by(url) / (30 * 24) * 1.5  / 1000^4) + (sum(storj_sat_month_egress{nodename=~\"$node.*\"}) by(url) / 1000^4 * 20)",
+          "expr": "sum(storj_sat_summary{type=\"currentStorageUsed\",nodename=~\"$node.*\"}) by (url)",
+          "interval": "",
+          "legendFormat": "{{url}} | SpaceUsed",
+          "refId": "I"
+        },
+        {
+          "expr": "(sum(storj_sat_summary{type=\"storageSummary\",nodename=~\"$node.*\"}) by(url) / (30 * 24) * 1.5  / 1000^4) + (sum(storj_sat_month_egress{instance=~\"$node.*\"}) by(url) / 1000^4 * 20)",
           "interval": "",
           "legendFormat": "{{url}} | Payout",
           "refId": "H"
@@ -5297,22 +5381,31 @@
           "refId": "E"
         },
         {
-          "expr": "avg(storj_sat_summary{type=\"onlineScore\", nodename=~\"$node.*\"}) by(url) * 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"onlineScore\", nodename=~\"$node.*\"}) by(url) * 10000) / 100",
           "hide": false,
           "interval": "",
           "legendFormat": "{{url}} | Uptime",
           "refId": "C"
         },
         {
-          "expr": "avg(storj_sat_audit{type=\"score\",nodename=~\"$node.*\"}) by(url) * 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"auditScore\",nodename=~\"$node.*\"}) by(url) * 10000) / 100",
           "hide": false,
+          "interval": "",
           "legendFormat": "{{url}} | Audit",
           "refId": "D"
         },
         {
           "expr": "sum(storj_sat_summary{type=\"disqualified\",nodename=~\"$node.*\"}) by (url)",
+          "interval": "",
           "legendFormat": "{{url}} | Disqualified",
           "refId": "F"
+        },
+        {
+          "expr": "floor(avg(storj_sat_audit{type=\"suspensionScore\",nodename=~\"$node.*\"}) by(url) * 10000) / 100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{url}} | Suspension",
+          "refId": "J"
         },
         {
           "expr": "sum(storj_sat_summary{type=\"suspended\",nodename=~\"$node.*\"}) by (url)",
@@ -6403,5 +6496,5 @@
   "timezone": "",
   "title": "Storj-Exporter-Logs",
   "uid": "b5fb5i5fk7lnw",
-  "version": 1
+  "version": 5
 }

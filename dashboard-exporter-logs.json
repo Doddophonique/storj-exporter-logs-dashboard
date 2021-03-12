@@ -79,7 +79,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1613751275920,
+  "iteration": 1615523285790,
   "links": [
     {
       "icon": "external link",
@@ -749,7 +749,7 @@
           "refId": "E"
         },
         {
-          "expr": "sum(storj_pieces_delete_successful{nodename=~\"$node.*\"})/(sum(storj_pieces_delete_successful{nodename=~\"$node.*\"})+sum(storj_pieces_delete_failed{nodename=~\"$node.*\"} OR vector(0)))",
+          "expr": "sum(storj_pieces_delete_successful{nodename=~\"$node.*\"})/(sum(storj_pieces_delete_successful{nodename=~\"$node.*\"})+sum(storj_pieces_delete_failed{nodename=~\"$node.*\"} OR vector(0))+sum(storj_pieces_delete_expired{nodename=~\"$node.*\"} OR vector(0)))",
           "interval": "",
           "legendFormat": "Delete",
           "refId": "C"
@@ -3597,528 +3597,600 @@
         "y": 43
       },
       "id": 700,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "description": "Pieces per second",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": [],
-              "unit": "pps"
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 10,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 57
-          },
-          "hiddenSeries": false,
-          "id": 688,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RateOut/",
-              "color": "#96D98D",
-              "stack": "A",
-              "transform": "negative-Y"
-            },
-            {
-              "alias": "/RateIn/",
-              "color": "#FFB357",
-              "stack": "B"
-            },
-            {
-              "alias": "0",
-              "color": "rgb(4, 4, 4)",
-              "hideTooltip": true,
-              "legend": false
-            },
-            {
-              "alias": "/RateDelete/",
-              "color": "#8F3BB8",
-              "stack": "C",
-              "transform": "negative-Y"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "RateOut {{url}}",
-              "refId": "A"
-            },
-            {
-              "expr": "sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "RateIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "0",
-              "interval": "",
-              "legendFormat": "0",
-              "refId": "E"
-            },
-            {
-              "expr": "sum(rate(storj_pieces_delete_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
-              "interval": "",
-              "intervalFactor": 10,
-              "legendFormat": "RateDelete {{url}}",
-              "refId": "C"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Piece rate by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "pps",
-              "label": "Rate-out (-) / Rate-in (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net monthly sum",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": 0
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 57
-          },
-          "hiddenSeries": false,
-          "id": 693,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RateIn/",
-              "stack": "B"
-            },
-            {
-              "alias": "/RateOut/",
-              "stack": "C",
-              "transform": "negative-Y"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(url) * 8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(url) * 8",
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateOut {{url}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Ingress/Egress rate by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": "Rate-out (-) / Rate-in (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "description": "Normal Ingress and Egress without Repair Traffic and Audits",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 5,
-            "w": 12,
-            "x": 0,
-            "y": 65
-          },
-          "hiddenSeries": false,
-          "id": 725,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RateIn/",
-              "stack": "B"
-            },
-            {
-              "alias": "/RateOut/",
-              "stack": "C",
-              "transform": "negative-Y"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
-              "interval": "",
-              "intervalFactor": 5,
-              "legendFormat": "RateOut {{url}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Usage Ingress/Egress rate by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": "Rate-out (-) / Rate-in (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_PROMETHEUS}",
-          "decimals": null,
-          "description": "Audit and Repair not separated because Audit is almost irrelevant in comparison.",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 6,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 5,
-            "w": 12,
-            "x": 12,
-            "y": 65
-          },
-          "hiddenSeries": false,
-          "id": 714,
-          "interval": "",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "sideWidth": null,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.4.0",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "/RepairIn/",
-              "stack": "A"
-            },
-            {
-              "alias": "/RepairOut/",
-              "stack": "B",
-              "transform": "negative-Y"
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(url) * 8",
-              "hide": false,
-              "interval": "",
-              "intervalFactor": 4,
-              "legendFormat": "RepairIn {{url}}",
-              "refId": "B"
-            },
-            {
-              "expr": "sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(url) * 8",
-              "interval": "",
-              "intervalFactor": 4,
-              "legendFormat": "RepairOut {{url}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Repair Ingress/Egress rate by Satellite (stacked)",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": false,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bps",
-              "label": "Rate Out (-) / Rate In (+)",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "decimals": null,
-              "format": "bps",
-              "label": "Net IO rate",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "title": "Node IO by satellite",
       "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "description": "Pieces per second",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": [],
+          "unit": "pps"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 10,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 44
+      },
+      "hiddenSeries": false,
+      "id": 688,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RateOut/",
+          "color": "#96D98D",
+          "stack": "A",
+          "transform": "negative-Y"
+        },
+        {
+          "alias": "/RateIn/",
+          "color": "#FFB357",
+          "stack": "B"
+        },
+        {
+          "alias": "0",
+          "color": "rgb(4, 4, 4)",
+          "hideTooltip": true,
+          "legend": false
+        },
+        {
+          "alias": "/RateDelete/",
+          "color": "#8F3BB8",
+          "stack": "C",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_pieces_download_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "RateOut {{url}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(storj_pieces_upload_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "RateIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "0",
+          "interval": "",
+          "legendFormat": "0",
+          "refId": "E"
+        },
+        {
+          "expr": "sum(rate(storj_pieces_delete_successful{nodename=~\"$node.*\"}[$__rate_interval])) by(url)",
+          "interval": "",
+          "intervalFactor": 10,
+          "legendFormat": "RateDelete {{url}}",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Piece rate by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "pps",
+          "label": "Rate-out (-) / Rate-in (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net monthly sum",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": 0
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 44
+      },
+      "hiddenSeries": false,
+      "id": 693,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RateIn/",
+          "stack": "B"
+        },
+        {
+          "alias": "/RateOut/",
+          "stack": "C",
+          "transform": "negative-Y"
+        },
+        {
+          "alias": "/asia-east-1/",
+          "color": "#73BF69"
+        },
+        {
+          "alias": "/europe-north-1/",
+          "color": "#FADE2A"
+        },
+        {
+          "alias": "/europe-west-1/",
+          "color": "#F2495C"
+        },
+        {
+          "alias": "/saltlake/",
+          "color": "#5794F2"
+        },
+        {
+          "alias": "/us-central-1/",
+          "color": "#FF9830"
+        },
+        {
+          "alias": "/us2/",
+          "color": "#B877D9"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\"}[5m])) by(url) * 8",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\"}[5m])) by(url) * 8",
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateOut {{url}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Ingress/Egress rate by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "label": "Rate-out (-) / Rate-in (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "description": "Normal Ingress and Egress without Repair Traffic and Audits",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 52
+      },
+      "hiddenSeries": false,
+      "id": 725,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RateIn/",
+          "stack": "B"
+        },
+        {
+          "alias": "/RateOut/",
+          "stack": "C",
+          "transform": "negative-Y"
+        },
+        {
+          "alias": "/asia-east-1/",
+          "color": "#73BF69"
+        },
+        {
+          "alias": "/europe-north-1/",
+          "color": "#FADE2A"
+        },
+        {
+          "alias": "/europe-west-1/",
+          "color": "#F2495C"
+        },
+        {
+          "alias": "/saltlake/",
+          "color": "#5794F2"
+        },
+        {
+          "alias": "/us-central-1/",
+          "color": "#FF9830"
+        },
+        {
+          "alias": "/us2/",
+          "color": "#B877D9"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_sat_month_ingress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(rate(storj_sat_month_egress{nodename=~\"$node.*\",type=\"usage\"}[5m])) by(url) * 8",
+          "interval": "",
+          "intervalFactor": 5,
+          "legendFormat": "RateOut {{url}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Usage Ingress/Egress rate by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "label": "Rate-out (-) / Rate-in (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "decimals": null,
+      "description": "Audit and Repair not separated because Audit is almost irrelevant in comparison.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 6,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 52
+      },
+      "hiddenSeries": false,
+      "id": 714,
+      "interval": "",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.4.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/RepairIn/",
+          "stack": "A"
+        },
+        {
+          "alias": "/RepairOut/",
+          "stack": "B",
+          "transform": "negative-Y"
+        },
+        {
+          "alias": "/asia-east-1/",
+          "color": "#73BF69"
+        },
+        {
+          "alias": "/europe-north-1/",
+          "color": "#FADE2A"
+        },
+        {
+          "alias": "/europe-west-1/",
+          "color": "#F2495C"
+        },
+        {
+          "alias": "/saltlake/",
+          "color": "#5794F2"
+        },
+        {
+          "alias": "/us-central-1/",
+          "color": "#FF9830"
+        },
+        {
+          "alias": "/us2/",
+          "color": "#B877D9"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(storj_sat_month_ingress{type!=\"usage\"}[5m])) by(url) * 8",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "RepairIn {{url}}",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(rate(storj_sat_month_egress{type!=\"usage\"}[5m])) by(url) * 8",
+          "interval": "",
+          "intervalFactor": 4,
+          "legendFormat": "RepairOut {{url}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Repair Ingress/Egress rate by Satellite (stacked)",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bps",
+          "label": "Rate Out (-) / Rate In (+)",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "bps",
+          "label": "Net IO rate",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
       "collapsed": false,
@@ -4127,7 +4199,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 57
       },
       "id": 644,
       "panels": [],
@@ -4155,7 +4227,7 @@
         "h": 6,
         "w": 12,
         "x": 0,
-        "y": 45
+        "y": 58
       },
       "hiddenSeries": false,
       "id": 642,
@@ -4275,7 +4347,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 45
+        "y": 58
       },
       "hiddenSeries": false,
       "id": 298,
@@ -4385,7 +4457,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 51
+        "y": 64
       },
       "id": 773,
       "panels": [
@@ -4877,7 +4949,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 52
+        "y": 65
       },
       "id": 729,
       "panels": [],
@@ -4941,7 +5013,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 53
+        "y": 66
       },
       "hide_first_column": false,
       "hide_headers": false,
@@ -5381,14 +5453,14 @@
           "refId": "E"
         },
         {
-          "expr": "floor(avg(storj_sat_audit{type=\"onlineScore\", nodename=~\"$node.*\"}) by(url) * 10000) / 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"onlineScore\", nodename=~\"$node.*\"}) by(url) * 1000) / 10",
           "hide": false,
           "interval": "",
           "legendFormat": "{{url}} | Uptime",
           "refId": "C"
         },
         {
-          "expr": "floor(avg(storj_sat_audit{type=\"auditScore\",nodename=~\"$node.*\"}) by(url) * 10000) / 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"auditScore\",nodename=~\"$node.*\"}) by(url) * 1000) / 10",
           "hide": false,
           "interval": "",
           "legendFormat": "{{url}} | Audit",
@@ -5401,7 +5473,7 @@
           "refId": "F"
         },
         {
-          "expr": "floor(avg(storj_sat_audit{type=\"suspensionScore\",nodename=~\"$node.*\"}) by(url) * 10000) / 100",
+          "expr": "floor(avg(storj_sat_audit{type=\"suspensionScore\",nodename=~\"$node.*\"}) by(url) * 1000) / 10",
           "hide": false,
           "interval": "",
           "legendFormat": "{{url}} | Suspension",
@@ -5439,7 +5511,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 53
+        "y": 66
       },
       "hiddenSeries": false,
       "id": 736,
@@ -5553,7 +5625,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 57
+        "y": 70
       },
       "hiddenSeries": false,
       "id": 737,
@@ -5663,7 +5735,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 223
+        "y": 236
       },
       "id": 672,
       "panels": [
@@ -6476,7 +6548,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -6496,5 +6568,5 @@
   "timezone": "",
   "title": "Storj-Exporter-Logs",
   "uid": "b5fb5i5fk7lnw",
-  "version": 5
+  "version": 8
 }

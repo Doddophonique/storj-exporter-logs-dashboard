@@ -66,7 +66,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1612803148048,
+  "iteration": 1615524712590,
   "links": [],
   "panels": [
     {
@@ -118,22 +118,18 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:2024",
           "alias": "ERROR",
           "color": "#F2495C"
         },
         {
-          "$$hashKey": "object:2032",
           "alias": "INFO",
           "color": "#73BF69"
         },
         {
-          "$$hashKey": "object:2040",
           "alias": "WARN",
           "color": "#FADE2A"
         },
         {
-          "$$hashKey": "object:2048",
           "alias": "DEBUG",
           "color": "#5794F2"
         }
@@ -169,7 +165,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:65",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -178,7 +173,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:66",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -227,7 +221,7 @@
       "type": "logs"
     }
   ],
-  "refresh": "1m",
+  "refresh": "10s",
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
@@ -317,12 +311,12 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Storj-Logs",
   "uid": "MkeWOrLMk",
-  "version": 12
+  "version": 13
 }

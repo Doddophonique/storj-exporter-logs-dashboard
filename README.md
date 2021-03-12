@@ -93,6 +93,7 @@ Add `nodename` to your existing job for each node:
       # - targets: ["storj02-exporter:9651"]
       #   labels:
       #     nodename: "storj02"
+      #     instance: "storj02"
       ...
 ```
 

@@ -130,7 +130,7 @@ scrape_configs:
         max_idle_duration: 24h
         source: message
         config:
-          value: "deleted"
+          value: "delete piece sent to trash"
           action: inc
       delete_failed:
         type: Counter

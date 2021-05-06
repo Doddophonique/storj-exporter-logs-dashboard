@@ -58,15 +58,15 @@ scrape_configs:
   - replace:
       expression: "(121RTSDpyNZVcEU84Ticf2L1ntiuUimbWgfATz21tuvgk3vzoA6)"
       source: "url"
-      replace: "asia-east-1.tardigrade.io:7777"
+      replace: "ap1.storj.io:7777"
   - replace:
       expression: "(12EayRS2V1kEsWESU9QMRseFhdxYxKicsiFmxrsLZHeLUtdps3S)"
       source: "url"
-      replace: "us-central-1.tardigrade.io:7777"
+      replace: "us1.storj.io:7777"
   - replace:
       expression: "(12L9ZFwhzVpuEKMUNUqkaTLGzwY9G24tbiigLiXpmZWKwmcNDDs)"
       source: "url"
-      replace: "europe-west-1.tardigrade.io:7777"
+      replace: "eu1.storj.io:7777"
   - replace:
       expression: "(12rfG3sh9NCWiX3ivPjq2HtdLmbqCrvHVEzJubnzFzosMuawymB)"
       source: "url"
@@ -78,7 +78,7 @@ scrape_configs:
   - replace:
       expression: "(12tRQrMTWUWwzwGh18i7Fqs67kmdhH9t6aToeiwbo5mfS2rUmo)"
       source: "url"
-      replace: "us2.tardigrade.io:7777"
+      replace: "us2.storj.io:7777"
 
   ## Specify 'type' based on Action
   - replace:

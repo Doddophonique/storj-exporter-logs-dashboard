@@ -258,7 +258,7 @@ scrape_configs:
 
   ## Corrected error query
   - match:
-      selector: '{loglevel="ERROR"} !~ "(\\.*)(gracefulexit:service\"\\,\"M\":\"failed to get satellite address)" !~ "(\\.*)(servers\"\\,\"M\":\"unexpected shutdown of a runner)"  | type != "usage" and type != "repair"'
+      selector: '{loglevel="ERROR",type!="usage",type!="repair"} !~ "(\\.*)(gracefulexit:service\"\\,\"M\":\"failed to get satellite address)" !~ "(\\.*)(servers\"\\,\"M\":\"unexpected shutdown of a runner)"'
       stages:
       - template:
           source: errorCorrected
